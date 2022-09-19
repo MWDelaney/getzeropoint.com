@@ -11,13 +11,19 @@
     <link rel="stylesheet" href="{{ '/assets/styles/styles.css' | url }}"/>
 
     {# Favicon #}
-    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/assets/images/zeropoint-icon.svg">
 
     {# metagen plugin output #}
     {% metagen
-      title = title or metadata.title,
-      url = site.siteUrl + page.url
-     %}
+        title=title or metadata.title,
+        desc=desc or metadata.desc,
+        url=url + page.url,
+        img=image,
+        img_alt=alt,
+        twitter_card_type=type,
+        twitter_handle=twitter,
+        name=name
+    %}
 
     {# If ELEVENTY_ENV environmental variable isn't set to "production", hide this page from search engines #}
     {% if ( index == false) %}
