@@ -30,17 +30,12 @@
     <a class="visually-hidden" href="#main">Skip to content</a>
 
     {# Site header with navigation #}
-    <header>
+    {# <header>
       {% include "partials/navigation.njk" %}
-    </header>
+    </header> #}
 
     {# Main content #}
     <main id="main" tabindex="-1">
-      <header id="page-header">
-        <h1>
-          {{ title | safe }}
-        </h1>
-      </header>
       {{ content | safe }}
     </main>
 

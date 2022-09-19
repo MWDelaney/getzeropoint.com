@@ -1,52 +1,24 @@
-/**
- * Import stylesheet partials
-*/
-@import "reset";
 @import "branding";
+@import "reset.scss";
 
-/**
- * getgetzeropoint.com.com starter styling
-*/
 body {
-  color: var(--color-text);
-  background-color: var(--color-background);
-  font-family: var(--font-family-sans-serif);
+  color: var(--color);
+  background-color: var(--background-color);
+  font-family: var(--font);
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--primary-color);
 }
 
-#main {
-  max-width: var(--container-width);
-  margin: calc(var(--unit) * 5) auto;
+p {
+  margin-bottom: var(--unit);
 }
 
-#navigation {
-  display: flex;
-  border-bottom: 1px solid var(--color-light);
-  margin: var(--unit);
-}
-
-#footer {
-  margin: auto;
-  max-width: var(--container-width);
-  border-top: 1px solid var(--color-light);
-  text-align: center;
-}
-
-hr {
-  border-color: var(--color-light);
-}
-
-img {
-  height: auto;
-}
-
-.navigation-item,
-.navigation-label,
-button {
-  padding: calc(var(--unit) / 2);
+#page-header {
+  hr {
+    margin: var(--unit) auto;
+  }
 }
 
 .visually-hidden {
@@ -59,17 +31,101 @@ button {
   width: 1px;
 }
 
-label,
-input,
-textarea {
-  width: 100%;
-  display: block;
+.logo {
+  margin-top: calc(var(--unit) * 5);
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  max-width: calc(var(--unit) * 30);
+
+  svg {
+    max-width: 100%;
+    height: auto;
+    transform: translateX(-12%);
+
+    > * {
+      background-clip: text;
+      color: transparent;
+      fill: url(#ZeroPointGradient);
+    }
+  }
 }
 
-button {
-  margin: 0;
+.button {
+  padding: var(--unit);
+  text-decoration: none;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius);
+  transition: var(--transition);
+
+  &-launch {
+    &:hover {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+  }
+
+  &-code {
+    border: 0;
+  }
 }
 
-label {
-  padding: calc(var(--unit) / 2) 0;
+header,
+footer {
+  text-align: center;
+  padding-left: var(--unit);
+  padding-right: var(--unit);
+}
+
+section {
+  margin-top: calc(var(--unit) * 3);
+  max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--unit);
+  padding-right: var(--unit);
+
+  &.get-started {
+    text-align: center;
+    padding-bottom: calc(var(--unit) * 3);
+  }
+}
+
+hr {
+  border: 0;
+  height: 2px;
+  background-image: var(--gradient);
+  border-radius: var(--unit);
+  transform: rotate(-1.5deg);
+  text-align: center;
+  max-width: 40ch;
+  margin-left: 0;
+}
+
+footer {
+  margin-top: calc(var(--unit) * 5);
+  font-size: 70%;
+}
+
+h3 {
+  margin-top: var(--unit);
+}
+
+.additions {
+  li {
+    margin-bottom: var(--unit);
+  }
+}
+
+.additions-search {
+  list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='12' width='12' viewBox='0 0 12 12'%3E%3Ctitle%3Ezoom%3C/title%3E%3Cg stroke-width='1' fill='%23212121' stroke='%23212121' class='nc-icon-wrapper'%3E%3Cline x1='11.5' y1='11.5' x2='8.328' y2='8.328' fill='none' stroke-linecap='round' stroke-linejoin='round' data-color='color-2'%3E%3C/line%3E%3Ccircle cx='5.5' cy='5.5' r='4' fill='none' stroke='%23212121' stroke-linecap='round' stroke-linejoin='round'%3E%3C/circle%3E%3C/g%3E%3C/svg%3E");
+}
+
+.additions-blog {
+  list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='12' width='12' viewBox='0 0 12 12'%3E%3Ctitle%3Efile text%3C/title%3E%3Cg stroke-width='1' stroke-linejoin='round' fill='none' stroke='%23212121' stroke-linecap='round' class='nc-icon-wrapper'%3E%3Cline x1='3.5' y1='4.5' x2='7.5' y2='4.5' stroke='%23212121'%3E%3C/line%3E%3Cline x1='3.5' y1='7.5' x2='8.5' y2='7.5' stroke='%23212121'%3E%3C/line%3E%3Cpolygon points='10.5 11.5 1.5 11.5 1.5 0.5 7.5 0.5 10.5 3.5 10.5 11.5'%3E%3C/polygon%3E%3C/g%3E%3C/svg%3E");
+}
+
+.additions-bootstrap {
+  list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='12' width='12' viewBox='0 0 12 12'%3E%3Ctitle%3Egrid interface%3C/title%3E%3Cg stroke-width='1' stroke-linejoin='round' fill='none' stroke='%23212121' stroke-linecap='round' class='nc-icon-wrapper'%3E%3Crect x='0.5' y='0.5' width='4' height='4'%3E%3C/rect%3E%3Crect x='7.5' y='0.5' width='4' height='4' stroke='%23212121'%3E%3C/rect%3E%3Crect x='0.5' y='7.5' width='4' height='4' stroke='%23212121'%3E%3C/rect%3E%3Crect x='7.5' y='7.5' width='4' height='4'%3E%3C/rect%3E%3C/g%3E%3C/svg%3E");
 }
