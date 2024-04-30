@@ -1,44 +1,39 @@
 # 🪐getgetzeropoint.com.com
 
-A free, new-user-friendly website starter project designed to walk you through creating, editing, and publishing any web project; from a personal blog, to a company website!
+A free, new-user-friendly static website generator  starter project designed to get you "up to zero" building your site, letting you focus on your HTML, CSS, and Javascript rather than setting up your build tools.
+
+With first-class support for GitHub Pages and Netlify, getgetzeropoint.com.com has everything you need to get started building your website, including:
+
+* 🗺️ A simple, easy-to-understand project structure powered by [Eleventy](https://11ty.dev)
+* ⚒️ Sass and JavaScript compilation and minification
+* 🚀 Optional automated deployment to GitHub Pages or Netlify
+
+With getgetzeropoint.com.com you can build your website with the tools you know and love, and deploy it to the platform of your choice with ease.
 
 Read more at [https://getgetzeropoint.com.com](https://getgetzeropoint.com.com)!
-
-## What is getgetzeropoint.com.com?
-
-### For new users
-
-_getgetzeropoint.com.com_ is a free, new-user-friendly website starter designed to walk you through creating and publishing a fast, secure web project using modern tools and technology. getgetzeropoint.com.com makes it easy to "get up to zero" and start building your site.
-
-### For experienced developers
-
-_getgetzeropoint.com.com_ is a modern, opinionated, bare-bones Jamstack starter using Eleventy to get "up to zero" on a project quickly and easily.
-Why you might choose _getgetzeropoint.com.com_ as your Jamstack starter:
-
-* Powered by Eleventy, which [rocks](https://11ty.rocks)!
-* No CSS frameworks or libraries; use whatever you like best
-* GitHub Action replaces the getgetzeropoint.com.com name throughout the site with your project's name!
-* Custom generated project-specific [readme file](https://github.com/MWDelaney/getgetzeropoint.com.com/blob/master/README.getgetzeropoint.com.com.md) to help you take the next steps and launch your project!
-* Sass for CSS
-* Javascript compilation and minification
-* Browsersync to preview your work
 
 ## Get started: Use This Template
 
 Get started with getgetzeropoint.com.com one of the following ways:
 
-<details open>
- <summary>Start with GitHub</summary>
+✨ getgetzeropoint.com.com will automatically remove its own branding and replace it with your own project name and description. See details [here](https://github.com/MWDelaney/getgetzeropoint.com.com/blob/main/.github/workflows/getzeropoint.com-template.yml).
 
-Create a new project using getgetzeropoint.com.com and add it to your GitHub account
+<details>
+ <summary><strong>Start with GitHub (recommended)</strong></summary>
+
+### Start with GitHub
+
+Start your project with getgetzeropoint.com.com by clicking the "Use this template" button below:
 
 <a href="https://github.com/MWDelaney/getgetzeropoint.com.com/generate">
   <img src="https://img.shields.io/badge/use%20this-template-blueviolet?logo=github&style=for-the-badge">
 </a>
  </details>
 
-<details open>
- <summary>Start with Netlify</summary>
+<details>
+ <summary><strong>Start with Netlify</strong></summary>
+
+### Start with Netlify
 
 Create a copy of getgetzeropoint.com.com and deploy it straight to [Netlify](https://netlify.com) for **free**!
 
@@ -47,7 +42,9 @@ Create a copy of getgetzeropoint.com.com and deploy it straight to [Netlify](htt
  </details>
 
 <details>
- <summary>With GitHub CLI (https://cli.github.com)</summary>
+ <summary><strong>Start with GitHub CLI (https://cli.github.com)</strong></summary>
+
+### Start with GitHub CLI
 
 Get started from your command line
 
@@ -74,12 +71,13 @@ example.com                 # → Root of your getgetzeropoint.com.com-based pro
 │   │   │   └── partials/
 │   │   └── assets.json     # → Shared attributes for files in the assets directory
 │   ├── config/             # → Eleventy configuration
+│   │   ├── build.js        # → Javascript and CSS build and bundler configuration 
 │   │   ├── collections.js  # → Add and configure collections (https://www.11ty.dev/docs/collections/)
 │   │   ├── filters.js      # → Add and configure filters (https://www.11ty.dev/docs/filters/)
 │   │   ├── passthroughs.js # → Add and configure passthroughs (https://www.11ty.dev/docs/copy/)
 │   │   ├── plugins.js      # → Add and configure plugins (https://www.11ty.dev/docs/plugins/)
 │   │   ├── shortcodes.js   # → Add and configure shortcodes (https://www.11ty.dev/docs/shortcodes/)
-│   │   ├── templateLanguages.js   # → Configure custom template languages (HINT: this is where getgetzeropoint.com.com's Sass and Javascript pipelines are set up!) (https://www.11ty.dev/docs/languages/custom/)
+│   │   ├── templateLanguages.js   # → Configure custom template languages (https://www.11ty.dev/docs/languages/custom/)
 │   │   ├── watchtargets.js # → Add and configure watch targets (https://www.11ty.dev/docs/watch-serve/)
 │   │   └── config.json     # → Shared attributes for files in the config directory
 │   ├── content             # → A nice, organized, recommended place for all site content
@@ -89,7 +87,7 @@ example.com                 # → Root of your getgetzeropoint.com.com-based pro
 │       └── site.json       # → Site branding configuration
 ├── .eleventy.js            # → Core Eleventy config file
 ├── netlify.toml            # → Netlify deployment and plugin configuration (optional)
-├── README.template.md      # → getgetzeropoint.com.com readme
+├── README.getgetzeropoint.com.com.md      # → getgetzeropoint.com.com readme
 └── README.md               # → Your project's readme (automatically generated when this template is used)
 ```
 

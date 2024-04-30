@@ -15,6 +15,10 @@ p {
   margin-bottom: var(--unit);
 }
 
+.lead {
+  font-size: 1.25rem;
+}
+
 #page-header {
   hr {
     margin: var(--unit) auto;
@@ -46,7 +50,7 @@ p {
     > * {
       background-clip: text;
       color: transparent;
-      fill: url(#ZeroPointGradient);
+      fill: url(#getgetzeropoint.com.comGradient);
     }
   }
 }
@@ -85,6 +89,11 @@ section {
   margin-right: auto;
   padding-left: var(--unit);
   padding-right: var(--unit);
+  text-align: left;
+
+  li {
+    margin-bottom: var(--unit);
+  }
 
   &.get-started {
     text-align: center;
@@ -110,12 +119,6 @@ footer {
 
 h3 {
   margin-top: var(--unit);
-}
-
-.additions {
-  li {
-    margin-bottom: var(--unit);
-  }
 }
 
 .additions-search {
