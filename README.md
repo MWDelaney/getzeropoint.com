@@ -1,67 +1,65 @@
-# getgetzeropoint.com.com
+# 🪐ZeroPoint
 
-This site uses [Eleventy](https://www.11ty.dev), [GitHub](https://github.com), and [Netlify](https://netlify.com).
+A free, new-user-friendly static website generator  starter project designed to get you "up to zero" building your site, letting you focus on your HTML, CSS, and Javascript rather than setting up your build tools.
 
-## Start creating your site
+With first-class support for GitHub Pages and Netlify, ZeroPoint has everything you need to get started building your website, including:
 
-Create and edit your site **right from this readme file!**.
+* 🗺️ A simple, easy-to-understand project structure powered by [Eleventy](https://11ty.dev)
+* ⚒️ Sass and JavaScript compilation and minification
+* 🚀 Optional automated deployment to GitHub Pages or Netlify
 
-## Step 1: Creating and editing site pages and content
+With ZeroPoint you can build your website with the tools you know and love, and deploy it to the platform of your choice with ease.
 
-### Pages
+Read more at [https://getzeropoint.com](https://getzeropoint.com)!
 
-Create your site's main content! Pages can be written in HTML or [Markdown](https://www.markdownguide.org/basic-syntax/)!
+## Get started: Use This Template
 
-* [Edit the homepage](https://github.com/MWDelaney/getzeropoint.com/edit/master/src/pages/index.md)
-* [Create a new page](https://github.com/MWDelaney/getzeropoint.com/new/master/?filename=/src/pages/&value=---%0Atitle%3A%20Enter%20page%20title%20here%0A---)
+Get started with ZeroPoint one of the following ways:
 
-Or edit your entire site in a web-based editor by [clicking here](https://github.dev/MWDelaney/getzeropoint.com/). Your changes will be automatically saved to this GitHub repository and published to your site.
+✨ ZeroPoint will automatically remove its own branding and replace it with your own project name and description. See details [here](https://github.com/MWDelaney/ZeroPoint/blob/main/.github/workflows/zeropoint-template.yml).
 
-<!--
+<details>
+ <summary><strong>Start with GitHub (recommended)</strong></summary>
 
----
-#### Posts
-Blog posts
-* [Create a new post](https://github.com/MWDelaney/getzeropoint.com/new/master/?filename=/src/posts/&value=----%0Atitle%3A%20%22Enter%20post%20title%22%0Adate%3A%20%222025-01-01%0A---)
+### Start with GitHub
 
--->
+Start your project with ZeroPoint by clicking the "Use this template" button below:
 
-## Step 2: Look and Feel
+<a href="https://github.com/MWDelaney/ZeroPoint/generate">
+  <img src="https://img.shields.io/badge/use%20this-template-blueviolet?logo=github&style=for-the-badge">
+</a>
+ </details>
 
-### Navigation
+<details>
+ <summary><strong>Start with Netlify</strong></summary>
 
-Your site's navigation is how your users will get around! Edit the site's navigation menu in [JSON format](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON)!
+### Start with Netlify
 
-* [Edit the navigation](https://github.com/MWDelaney/getzeropoint.com/edit/master/src/data/navigation.json)
+Create a copy of ZeroPoint and deploy it straight to [Netlify](https://netlify.com) for **free**!
 
-### Styles
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/MWDelaney/ZeroPoint/)
 
-Colors, spacing, and fonts, oh my! You can edit your branding and styles here using CSS, SCSS, and CSS variables! Remember adding styles on MySpace? Same thing!
+ </details>
 
-* [Edit your branding](https://github.com/MWDelaney/getzeropoint.com/edit/master/src/assets/styles/_branding.scss)
-* [Edit your overall styles](https://github.com/MWDelaney/getzeropoint.com/edit/master/src/assets/styles/styles.scss)
+<details>
+ <summary><strong>Start with GitHub CLI (https://cli.github.com)</strong></summary>
 
-Learning CSS can be daunting but there are a ton of useful resources on the web. Check out [SmolCSS](https://smolcss.dev) to get started!
+### Start with GitHub CLI
 
-### Javascript
+Get started from your command line
 
-**Optional!** Add javascript functionality to your site
+ ```sh
+  gh repo create example.com --template MWDelaney/ZeroPoint
+ ```
 
-* [Add Javascript](https://github.com/MWDelaney/getzeropoint.com/edit/master/src/assets/scripts/main.js)
+</details>
 
-## Step 3: Deploy getgetzeropoint.com.com
+## Get to Know ZeroPoint
 
-### [Launch getgetzeropoint.com.com on Netlify for Free!](https://www.netlify.com/blog/2016/09/29/a-step-by-step-guide-deploying-on-netlify/)
-
----
-
-## Get to Know getgetzeropoint.com.com
-
-Ready to go deeper? Here's how getgetzeropoint.com.com is laid out:
-
+Ready to go deeper? Here's how ZeroPoint is laid out:
 
 ```sh
-example.com                 # → Root of your getgetzeropoint.com.com-based project
+example.com                 # → Root of your ZeroPoint-based project
 ├── src/                    # → Source directory
 │   ├── assets/             # → Site assets
 │   │   ├── fonts/
@@ -73,12 +71,13 @@ example.com                 # → Root of your getgetzeropoint.com.com-based pro
 │   │   │   └── partials/
 │   │   └── assets.json     # → Shared attributes for files in the assets directory
 │   ├── config/             # → Eleventy configuration
+│   │   ├── build.js        # → Javascript and CSS build and bundler configuration 
 │   │   ├── collections.js  # → Add and configure collections (https://www.11ty.dev/docs/collections/)
 │   │   ├── filters.js      # → Add and configure filters (https://www.11ty.dev/docs/filters/)
 │   │   ├── passthroughs.js # → Add and configure passthroughs (https://www.11ty.dev/docs/copy/)
 │   │   ├── plugins.js      # → Add and configure plugins (https://www.11ty.dev/docs/plugins/)
 │   │   ├── shortcodes.js   # → Add and configure shortcodes (https://www.11ty.dev/docs/shortcodes/)
-│   │   ├── templateLanguages.js   # → Configure custom template languages (HINT: this is where getgetzeropoint.com.com's Sass and Javascript pipelines are set up!) (https://www.11ty.dev/docs/languages/custom/)
+│   │   ├── templateLanguages.js   # → Configure custom template languages (https://www.11ty.dev/docs/languages/custom/)
 │   │   ├── watchtargets.js # → Add and configure watch targets (https://www.11ty.dev/docs/watch-serve/)
 │   │   └── config.json     # → Shared attributes for files in the config directory
 │   ├── content             # → A nice, organized, recommended place for all site content
@@ -88,7 +87,7 @@ example.com                 # → Root of your getgetzeropoint.com.com-based pro
 │       └── site.json       # → Site branding configuration
 ├── .eleventy.js            # → Core Eleventy config file
 ├── netlify.toml            # → Netlify deployment and plugin configuration (optional)
-├── README.template.md      # → getgetzeropoint.com.com readme
+├── README.ZeroPoint.md      # → ZeroPoint readme
 └── README.md               # → Your project's readme (automatically generated when this template is used)
 ```
 
