@@ -1,65 +1,98 @@
-# 🪐ZeroPoint
+# getgetzeropoint.com.com
 
-A free, new-user-friendly static website generator  starter project designed to get you "up to zero" building your site, letting you focus on your HTML, CSS, and Javascript rather than setting up your build tools.
+## Start building your website
 
-With first-class support for GitHub Pages and Netlify, ZeroPoint has everything you need to get started building your website, including:
+Create and edit your site **right from this readme file!**.
 
-* 🗺️ A simple, easy-to-understand project structure powered by [Eleventy](https://11ty.dev)
-* ⚒️ Sass and JavaScript compilation and minification
-* 🚀 Optional automated deployment to GitHub Pages or Netlify
-
-With ZeroPoint you can build your website with the tools you know and love, and deploy it to the platform of your choice with ease.
-
-Read more at [https://getzeropoint.com](https://getzeropoint.com)!
-
-## Get started: Use This Template
-
-Get started with ZeroPoint one of the following ways:
-
-✨ ZeroPoint will automatically remove its own branding and replace it with your own project name and description. See details [here](https://github.com/MWDelaney/ZeroPoint/blob/main/.github/workflows/zeropoint-template.yml).
+✨ Or edit your entire site in a web-based editor by [clicking here](https://github.dev/MWDelaney/getgetzeropoint.com.com/).
 
 <details>
- <summary><strong>Start with GitHub (recommended)</strong></summary>
+  <summary><strong>📝 Creating and editing pages</strong></summary>
 
-### Start with GitHub
+## Creating and editing pages and content
 
-Start your project with ZeroPoint by clicking the "Use this template" button below:
+### Pages
 
-<a href="https://github.com/MWDelaney/ZeroPoint/generate">
-  <img src="https://img.shields.io/badge/use%20this-template-blueviolet?logo=github&style=for-the-badge">
-</a>
- </details>
+Create your site's main content! Pages can be written in HTML or [Markdown](https://www.markdownguide.org/basic-syntax/)!
+
+* [Edit the homepage](https://github.com/MWDelaney/getzeropoint.com/edit/main/src/pages/index.md)
+* [Create a new page](https://github.com/MWDelaney/getzeropoint.com/new/main/?filename=/src/pages/&value=---%0Atitle%3A%20Enter%20page%20title%20here%0A---)
+
+<!--
+
+---
+#### Posts
+Blog posts
+* [Create a new post](https://github.com/MWDelaney/getzeropoint.com/new/main/?filename=/src/posts/&value=----%0Atitle%3A%20%22Enter%20post%20title%22%0Adate%3A%20%222025-01-01%0A---)
+
+-->
+</details>
 
 <details>
- <summary><strong>Start with Netlify</strong></summary>
+  <summary><strong>🎨 Look and Feel</strong></summary>
 
-### Start with Netlify
+## Look and Feel
 
-Create a copy of ZeroPoint and deploy it straight to [Netlify](https://netlify.com) for **free**!
+### Navigation
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/MWDelaney/ZeroPoint/)
+Your site's navigation is how your users will get around! Edit the site's navigation menu in [JSON format](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON)!
 
- </details>
+* [Edit the navigation](https://github.com/MWDelaney/getzeropoint.com/edit/main/src/data/navigation.json)
 
-<details>
- <summary><strong>Start with GitHub CLI (https://cli.github.com)</strong></summary>
+### Styles
 
-### Start with GitHub CLI
+Colors, spacing, and fonts, oh my! You can edit your branding and styles here using CSS, SCSS, and CSS variables! 
 
-Get started from your command line
+* [Edit your branding](https://github.com/MWDelaney/getzeropoint.com/edit/main/src/assets/styles/_branding.scss)
+* [Edit your overall styles](https://github.com/MWDelaney/getzeropoint.com/edit/main/src/assets/styles/styles.scss)
 
- ```sh
-  gh repo create example.com --template MWDelaney/ZeroPoint
- ```
+Learning CSS can be daunting but there are a ton of useful resources on the web. Check out [SmolCSS](https://smolcss.dev) to get started!
+
+### Javascript
+
+**Optional!** Add javascript functionality to your site
+
+* [Add Javascript](https://github.com/MWDelaney/getzeropoint.com/edit/main/src/assets/scripts/main.js)
 
 </details>
 
-## Get to Know ZeroPoint
+<details>
+  <summary><strong>🚀 Deploy getgetzeropoint.com.com</strong></summary>
 
-Ready to go deeper? Here's how ZeroPoint is laid out:
+## Deploy getgetzeropoint.com.com
+
+Once you set up deployment, any time you commit to your repository's `main` branch, GitHub will build and deploy your site.
+
+<details>
+  <summary><strong>Deploy to GitHub Pages</strong></summary>
+
+### Setup:
+
+1. [Enable GitHub Pages](https://github.com/MWDelaney/getgetzeropoint.com.com/settings/pages) in your repository settings, choose "GitHub Actions" as the source.
+2. [Allow "Read and write permissions" for GitHub Workflows](https://github.com/MWDelaney/getgetzeropoint.com.com/settings/actions) in your repository settings for the GitHub Actions workflow to run.
+
+</details>
+
+<details>
+  <summary><strong>Deploy to Netlify</strong></summary>
+
+### Setup:
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/MWDelaney/getgetzeropoint.com.com/)
+
+
+</details>
+
+</details>
+
+---
+
+## Get to Know getgetzeropoint.com.com
+
+Ready to go deeper? Here's how getgetzeropoint.com.com is laid out:
 
 ```sh
-example.com                 # → Root of your ZeroPoint-based project
+example.com                 # → Root of your getgetzeropoint.com.com-based project
 ├── src/                    # → Source directory
 │   ├── assets/             # → Site assets
 │   │   ├── fonts/
@@ -87,8 +120,8 @@ example.com                 # → Root of your ZeroPoint-based project
 │       └── site.json       # → Site branding configuration
 ├── .eleventy.js            # → Core Eleventy config file
 ├── netlify.toml            # → Netlify deployment and plugin configuration (optional)
-├── README.ZeroPoint.md      # → ZeroPoint readme
-└── README.md               # → Your project's readme (automatically generated when this template is used)
+├── README.getgetzeropoint.com.com.md     # → getgetzeropoint.com.com readme
+└── README.md
 ```
 
 ## Eleventy Configuration

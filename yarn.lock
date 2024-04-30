@@ -543,9 +543,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ZeroPoint@workspace:.":
+"getgetzeropoint.com.com@workspace:.":
   version: 0.0.0-use.local
-  resolution: "ZeroPoint@workspace:."
+  resolution: "getgetzeropoint.com.com@workspace:."
   dependencies:
     "@11ty/eleventy": "npm:^2.0.0"
     "@11ty/eleventy-img": "npm:^2.0.1"
