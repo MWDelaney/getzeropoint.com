@@ -543,26 +543,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"getgetzeropoint.com.com@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "getgetzeropoint.com.com@workspace:."
-  dependencies:
-    "@11ty/eleventy": "npm:^2.0.0"
-    "@11ty/eleventy-img": "npm:^2.0.1"
-    autoprefixer: "npm:^10.3.1"
-    chalk: "npm:^4.0.0"
-    cross-env: "npm:^7.0.3"
-    eleventy-plugin-metagen: "npm:^1.4.8"
-    esbuild: "npm:^0.20.2"
-    esbuild-sass-plugin: "npm:^3.2.0"
-    html-minifier: "npm:^4.0.0"
-    npm-run-all: "npm:^4.1.5"
-    postcss: "npm:^8.1.0"
-    stylelint: "npm:^14.0.1"
-    stylelint-config-standard: "npm:^23.0.0"
-  languageName: unknown
-  linkType: soft
-
 "a-sync-waterfall@npm:^1.0.0":
   version: 1.0.1
   resolution: "a-sync-waterfall@npm:1.0.1"
@@ -2605,6 +2585,26 @@ __metadata:
   checksum: 10c0/d8e83c991fc60085200d9adca0facf4338ce6bd2fc9f46849409c53c73b504a9a992bbfe938718e2bd26f6378092c18579c239754224461e4521dd8a4c503f7b
   languageName: node
   linkType: hard
+
+"getgetzeropoint.com.com@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "getgetzeropoint.com.com@workspace:."
+  dependencies:
+    "@11ty/eleventy": "npm:^2.0.0"
+    "@11ty/eleventy-img": "npm:^2.0.1"
+    autoprefixer: "npm:^10.3.1"
+    chalk: "npm:^4.0.0"
+    cross-env: "npm:^7.0.3"
+    eleventy-plugin-metagen: "npm:^1.4.8"
+    esbuild: "npm:^0.20.2"
+    esbuild-sass-plugin: "npm:^3.2.0"
+    html-minifier: "npm:^4.0.0"
+    npm-run-all: "npm:^4.1.5"
+    postcss: "npm:^8.1.0"
+    stylelint: "npm:^14.0.1"
+    stylelint-config-standard: "npm:^23.0.0"
+  languageName: unknown
+  linkType: soft
 
 "github-from-package@npm:0.0.0":
   version: 0.0.0
