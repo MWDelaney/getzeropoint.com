@@ -4,7 +4,7 @@
 
 Create and edit your site **right from this readme file!**.
 
-✨ Or edit your entire site in a web-based editor by [clicking here](https://github.dev/MWDelaney/getzeropoint.com/).
+🪐 Or edit your entire site in a web-based editor by [clicking here](https://github.dev/MWDelaney/getzeropoint.com/).
 
 <details>
   <summary><strong>📝 Creating and editing pages</strong></summary>
