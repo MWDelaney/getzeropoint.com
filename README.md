@@ -1,10 +1,10 @@
-# getgetzeropoint.com.com
+# getzeropoint.com
 
 ## Start building your website
 
 Create and edit your site **right from this readme file!**.
 
-✨ Or edit your entire site in a web-based editor by [clicking here](https://github.dev/MWDelaney/getgetzeropoint.com.com/).
+✨ Or edit your entire site in a web-based editor by [clicking here](https://github.dev/MWDelaney/getzeropoint.com/).
 
 <details>
   <summary><strong>📝 Creating and editing pages</strong></summary>
@@ -15,7 +15,7 @@ Create and edit your site **right from this readme file!**.
 
 Create your site's main content! Pages can be written in HTML or [Markdown](https://www.markdownguide.org/basic-syntax/)!
 
-* [Edit the homepage](https://github.com/MWDelaney/getzeropoint.com/edit/main/src/pages/index.md)
+* [Edit the homepage](https://github.com/MWDelaney/getzeropoint.com/edit/main/src/pages/index.njk)
 * [Create a new page](https://github.com/MWDelaney/getzeropoint.com/new/main/?filename=/src/pages/&value=---%0Atitle%3A%20Enter%20page%20title%20here%0A---)
 
 <!--
@@ -57,9 +57,9 @@ Learning CSS can be daunting but there are a ton of useful resources on the web.
 </details>
 
 <details>
-  <summary><strong>🚀 Deploy getgetzeropoint.com.com</strong></summary>
+  <summary><strong>🚀 Deploy getzeropoint.com</strong></summary>
 
-## Deploy getgetzeropoint.com.com
+## Deploy getzeropoint.com
 
 Once you set up deployment, any time you commit to your repository's `main` branch, GitHub will build and deploy your site.
 
@@ -68,8 +68,8 @@ Once you set up deployment, any time you commit to your repository's `main` bran
 
 ### Setup:
 
-1. [Enable GitHub Pages](https://github.com/MWDelaney/getgetzeropoint.com.com/settings/pages) in your repository settings, choose "GitHub Actions" as the source.
-2. [Allow "Read and write permissions" for GitHub Workflows](https://github.com/MWDelaney/getgetzeropoint.com.com/settings/actions) in your repository settings for the GitHub Actions workflow to run.
+1. [Enable GitHub Pages](https://github.com/MWDelaney/getzeropoint.com/settings/pages) in your repository settings, choose "GitHub Actions" as the source.
+2. [Allow "Read and write permissions" for GitHub Workflows](https://github.com/MWDelaney/getzeropoint.com/settings/actions) in your repository settings for the GitHub Actions workflow to run.
 
 </details>
 
@@ -78,7 +78,7 @@ Once you set up deployment, any time you commit to your repository's `main` bran
 
 ### Setup:
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/MWDelaney/getgetzeropoint.com.com/)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/MWDelaney/getzeropoint.com/)
 
 
 </details>
@@ -87,12 +87,12 @@ Once you set up deployment, any time you commit to your repository's `main` bran
 
 ---
 
-## Get to Know getgetzeropoint.com.com
+## Get to Know getzeropoint.com
 
-Ready to go deeper? Here's how getgetzeropoint.com.com is laid out:
+Ready to go deeper? Here's how getzeropoint.com is laid out:
 
 ```sh
-example.com                 # → Root of your getgetzeropoint.com.com-based project
+example.com                 # → Root of your ZeroPoint-based project
 ├── src/                    # → Source directory
 │   ├── assets/             # → Site assets
 │   │   ├── fonts/
@@ -120,7 +120,7 @@ example.com                 # → Root of your getgetzeropoint.com.com-based pro
 │       └── site.json       # → Site branding configuration
 ├── .eleventy.js            # → Core Eleventy config file
 ├── netlify.toml            # → Netlify deployment and plugin configuration (optional)
-├── README.getgetzeropoint.com.com.md     # → getgetzeropoint.com.com readme
+├── README.ZeroPoint.md     # → ZeroPoint readme
 └── README.md
 ```
 
