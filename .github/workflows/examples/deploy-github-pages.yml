@@ -2,6 +2,20 @@
 ##
 # Deploy to GitHub Pages
 ##
+# This workflow builds the site and deploys it to GitHub Pages.
+#
+# Prerequisites:
+#   - GitHub Pages must be enabled for this repository
+#   - Go to Settings → Pages and configure your Pages source
+#
+# Optional Variables (Settings → Secrets and variables → Actions → Variables):
+#   - BUILD_COMMAND: The npm command to run for building the site (defaults to "npm run build")
+#
+# To set these up:
+#   1. Go to your GitHub repository
+#   2. Navigate to Settings → Secrets and variables → Actions
+#   3. Add the optional variables in the "Variables" tab
+##
 
 name: 🚀 Deploy to GitHub Pages
 run-name: deploy-github-pages
@@ -34,6 +48,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          build_command: ${{ vars.BUILD_COMMAND }}
 
   deploy:
     # Add a dependency to the build job
@@ -52,27 +67,11 @@ jobs:
     # Deploy the site to GitHub Pages
     runs-on: ubuntu-latest
     steps:
+      # Deploy to GitHub Pages
       - name: 🚀 Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        id: gh_pages
+        uses: ./.github/actions/deploy-github-pages
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           artifact_name: public
-
-  release:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-
-        # Checkout the repo
-        - uses: actions/checkout@v4
-          with:
-            ref: ${{ github.event.pull_request.base.ref }}
-
-        # Create a new release
-        - name: 📦 Create Release
-          uses: ./.github/actions/new-release
-          with:
-            environment: ${{ env.environment }}
-            ref: ${{ github.sha }}
-            github_token: ${{ secrets.GITHUB_TOKEN }}
+          artifact_path: public
+          github_token: ${{ secrets.GITHUB_TOKEN }}

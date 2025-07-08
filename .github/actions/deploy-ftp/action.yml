@@ -1,0 +1,50 @@
+name: '🚀 Deploy to FTP'
+description: 'Downloads build artifact and deploys it to FTP server'
+inputs:
+  artifact_name:
+    description: 'Name of the artifact to download'
+    required: false
+    default: 'public'
+  artifact_path:
+    description: 'Path to extract the artifact to'
+    required: false
+    default: 'public'
+  ftp_server:
+    description: 'FTP server hostname'
+    required: true
+  ftp_username:
+    description: 'FTP username'
+    required: true
+  ftp_password:
+    description: 'FTP password'
+    required: true
+  server_dir:
+    description: 'Server directory to deploy to'
+    required: false
+    default: '/'
+  exclude:
+    description: 'Files to exclude from deployment (comma separated)'
+    required: false
+    default: ''
+runs:
+  using: 'composite'
+  steps:
+    # Get the artifact from the build job
+    - name: 📥 Get artifact
+      id: get_artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ inputs.artifact_name }}
+        path: ${{ inputs.artifact_path }}
+      shell: bash
+
+    # Deploy to FTP server
+    - name: 🚀 Deploy to FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ inputs.ftp_server }}
+        username: ${{ inputs.ftp_username }}
+        password: ${{ inputs.ftp_password }}
+        local-dir: ${{ inputs.artifact_path }}/
+        server-dir: ${{ inputs.server_dir }}
+        exclude: ${{ inputs.exclude }}

@@ -1,0 +1,44 @@
+name: '🚀 Deploy to GitHub Pages'
+description: 'Downloads build artifact and deploys it to GitHub Pages'
+inputs:
+  artifact_name:
+    description: 'Name of the artifact to download'
+    required: false
+    default: 'public'
+  artifact_path:
+    description: 'Path to extract the artifact to'
+    required: false
+    default: 'public'
+  github_token:
+    description: 'GitHub token for deployment'
+    required: true
+outputs:
+  page_url:
+    description: 'URL of the deployed GitHub Pages site'
+    value: ${{ steps.gh_pages.outputs.page_url }}
+runs:
+  using: 'composite'
+  steps:
+    # Get the artifact from the build job
+    - name: 📥 Get artifact
+      id: get_artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ inputs.artifact_name }}
+        path: ${{ inputs.artifact_path }}
+      shell: bash
+
+    # Re-upload artifact in pages-friendly way
+    - name: 📦 Upload Artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        name: public-github-pages
+        path: ${{ inputs.artifact_path }}
+
+    # Deploy the site to GitHub Pages
+    - name: 🚀 Deploy to GitHub Pages
+      id: gh_pages
+      uses: actions/deploy-pages@v4
+      with:
+        token: ${{ inputs.github_token }}
+        artifact_name: public-github-pages

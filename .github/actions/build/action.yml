@@ -5,6 +5,10 @@ inputs:
   github_token:
     description: 'The GitHub token to use'
     required: true
+  build_command:
+    description: 'The npm command to run for building the site'
+    required: false
+    default: 'npm run build'
 
 runs:
   using: 'composite'
@@ -18,11 +22,11 @@ runs:
     # Build the site
     - name: 👷‍♂️ Build Site
       shell: bash
-      run: npm run production
+      run: ${{ inputs.build_command }}
 
     # Upload the public directory as an artifact
     - name: 📦 Upload Artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: public
         path: public

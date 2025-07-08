@@ -1,0 +1,100 @@
+# .github/workflows/deploy-ftp.yml
+##
+# Deploy to FTP Server
+##
+# This workflow builds the site and deploys it to an FTP server.
+#
+# Required Secrets (Settings → Secrets and variables → Actions → Secrets):
+#   - FTP_SERVER: The hostname of your FTP server (e.g., ftp.example.com)
+#   - FTP_USERNAME: Your FTP username
+#   - FTP_PASSWORD: Your FTP password
+#
+# Required Variables (Settings → Secrets and variables → Actions → Variables):
+#   - SITE_URL: The URL where your site will be accessible (e.g., https://example.com)
+#
+# Optional Variables (Settings → Secrets and variables → Actions → Variables):
+#   - BUILD_COMMAND: The npm command to run for building the site (defaults to "npm run build")
+#   - FTP_SERVER_DIR: The directory on the FTP server to deploy to (defaults to "/")
+#                     Common values: "/public_html/", "/www/", "/htdocs/"
+#
+# To set these up:
+#   1. Go to your GitHub repository
+#   2. Navigate to Settings → Secrets and variables → Actions
+#   3. Add the required secrets in the "Secrets" tab
+#   4. Add the required and optional variables in the "Variables" tab
+##
+
+name: 🚀 Deploy to FTP
+run-name: deploy-ftp
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+
+env:
+  environment: production
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      # Build the site
+      - name: 👷‍♂️ Build the site
+        uses: ./.github/actions/build
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          build_command: ${{ vars.BUILD_COMMAND }}
+
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+
+    # Deploy to the production environment
+    environment:
+      name: production
+
+    # Deploy the site to FTP server
+    runs-on: ubuntu-latest
+    steps:
+      # Start a deployment
+      - name: 🟢 Start Deployment
+        id: deployment
+        uses: bobheadxi/deployments@v1
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ env.environment }}
+
+      # Deploy to FTP server
+      - name: 🚀 Deploy to FTP
+        id: ftp_deploy
+        uses: ./.github/actions/deploy-ftp
+        with:
+          artifact_name: public
+          artifact_path: public
+          ftp_server: ${{ secrets.FTP_SERVER }}
+          ftp_username: ${{ secrets.FTP_USERNAME }}
+          ftp_password: ${{ secrets.FTP_PASSWORD }}
+          server_dir: ${{ vars.FTP_SERVER_DIR || '/' }}
+
+      # Set the deployment status to success
+      - name: ✅ Finish Deployment
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env: ${{ steps.deployment.outputs.env }}
+          env_url: ${{ vars.SITE_URL }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
