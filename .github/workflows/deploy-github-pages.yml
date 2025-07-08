@@ -46,7 +46,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          build_command: ${{ vars.BUILD_COMMAND }}
+          build_command: ${{ secrets.BUILD_COMMAND || 'npm run build' }}
 
   deploy:
     # Add a dependency to the build job
@@ -74,5 +74,4 @@ jobs:
         uses: ./.github/actions/deploy-github-pages
         with:
           artifact_name: public
-          artifact_path: public
           github_token: ${{ secrets.GITHUB_TOKEN }}
