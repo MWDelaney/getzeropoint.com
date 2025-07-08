@@ -10,7 +10,7 @@
     "🚀": "cross-env ELEVENTY_ENV=production eleventy",
     "dev": "npm run-s 🪐",
     "staging": "npm run-s 🚧",
-    "production": "npm run-s 🚀",
+    "build": "npm run-s 🚀",
     "start": "npm run dev"
   },
   "repository": {
