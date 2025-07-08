@@ -25,4 +25,4 @@ runs:
       uses: actions/deploy-pages@v4
       with:
         token: ${{ inputs.github_token }}
-        artifact_name: public
+        artifact_name: github-pages
