@@ -31,7 +31,7 @@ runs:
     - name: 📦 Upload Artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        name: public-github-pages
+        name: public
         path: ${{ inputs.artifact_path }}
 
     # Deploy the site to GitHub Pages
@@ -40,4 +40,4 @@ runs:
       uses: actions/deploy-pages@v4
       with:
         token: ${{ inputs.github_token }}
-        artifact_name: public-github-pages
+        artifact_name: public
