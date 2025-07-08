@@ -40,8 +40,6 @@ jobs:
     steps:
       # Checkout the repo
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
 
       # Build the site
       - name: 👷‍♂️ Build the site
@@ -62,11 +60,14 @@ jobs:
     # Deploy to the github-pages environment
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.gh_pages.outputs.page_url }}
 
     # Deploy the site to GitHub Pages
     runs-on: ubuntu-latest
     steps:
+      # Checkout the repo to access custom actions
+      - uses: actions/checkout@v4
+
       # Deploy to GitHub Pages
       - name: 🚀 Deploy to GitHub Pages
         id: gh_pages
