@@ -19,21 +19,6 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    # Get the artifact from the build job
-    - name: 📥 Get artifact
-      id: get_artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: ${{ inputs.artifact_name }}
-        path: ${{ inputs.artifact_path }}
-
-    # Re-upload artifact in pages-friendly way
-    - name: 📦 Upload Artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        name: public
-        path: ${{ inputs.artifact_path }}
-
     # Deploy the site to GitHub Pages
     - name: 🚀 Deploy to GitHub Pages
       id: gh_pages
