@@ -53,8 +53,12 @@ ul {
 #main {
   max-width: var(--container-width);
   margin: auto;
-  padding: calc(var(--unit) * 2) calc(var(--unit) * 3);
+  padding: var(--unit);
   position: relative;
+
+  @container body (min-width: 100ch) {
+    padding: calc(var(--unit) * 2) calc(var(--unit) * 3);
+  }
 }
 
 #navigation {
@@ -163,25 +167,35 @@ ol {
   list-style: none;
   counter-reset: step-counter;
   margin-top: var(--unit);
+  padding-inline-start: calc(var(--unit) * 0.5);
 
   > li {
     background-color: var(--color-light);
     border-radius: var(--unit);
-    padding: var(--unit) calc(var(--unit) * 2);
+    padding: var(--unit);
     box-shadow: inset 0 0 2px 2px rgb(0 0 0 / 5%);
     margin-bottom: calc(var(--unit) * 3);
     counter-increment: step-counter;
     position: relative;
 
+    @container body (min-width: 100ch) {
+      padding: var(--unit) calc(var(--unit) * 2);
+    }
+
     &::before {
       @extend .text-gradient;
 
       content: counter(step-counter);
-      font-size: 5rem;
+      font-size: 2rem;
       font-weight: bold;
       position: absolute;
-      left: -4rem;
       transform: rotate(-4deg);
+      left: -2rem;
+
+      @container body (min-width: 100ch) {
+        font-size: 5rem;
+        left: -4rem;
+      }
     }
   }
 }
