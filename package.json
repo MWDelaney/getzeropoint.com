@@ -1,42 +1,44 @@
 {
-  "name": "ZeroPoint",
-  "version": "1.0.2",
-  "description": "",
+  "name": "Get ZeroPoint",
+  "version": "2026.1",
+  "description": "The website for ZeroPoint, A corporate-free website starter project that gets you up to zero.",
   "type": "module",
   "main": "index.html",
   "scripts": {
     "🪐": "cross-env ELEVENTY_ENV=development eleventy --serve",
     "🚧": "cross-env ELEVENTY_ENV=staging eleventy",
     "🚀": "cross-env ELEVENTY_ENV=production eleventy",
-    "dev": "npm run-s 🪐",
-    "staging": "npm run-s 🚧",
-    "build": "npm run-s 🚀",
-    "start": "npm run dev"
+    "dev": "npm run 🪐",
+    "staging": "npm run 🚧",
+    "production": "npm run 🚀",
+    "start": "npm run dev",
+    "build": "npm run production"
   },
   "repository": {
     "type": "git",
     "url": "git+project_urlname"
   },
-  "author": "MWDelaney",
+  "author": "mwdelaney",
   "license": "MIT",
   "browserslist": [
     "last 2 versions"
   ],
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0",
-    "@11ty/eleventy-img": "^3.0.0",
-    "autoprefixer": "^10.3.1",
-    "chalk": "^4.0.0",
+    "@11ty/eleventy": "^3.1.0",
+    "@11ty/eleventy-img": "^6.0.2",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
+    "@eslint/js": "^9.11.1",
     "cross-env": "^7.0.3",
-    "eleventy-plugin-metagen": "^1.8.3",
-    "esbuild": "^0.20.2",
-    "esbuild-sass-plugin": "^3.2.0",
-    "html-minifier": "^4.0.0",
+    "eleventy-plugin-reusable-components": "^1.0.1",
+    "esbuild": "^0.25.2",
+    "esbuild-sass-plugin": "^3.3.1",
+    "eslint": "^9.11.1",
+    "globals": "^15.9.0",
     "js-beautify": "^1.15.0",
     "markdown-it": "^14.1.0",
-    "npm-run-all": "^4.1.5",
-    "postcss": "^8.1.0",
-    "stylelint": "^14.0.1",
-    "stylelint-config-standard": "^23.0.0"
+    "pagefind": "^1.4.0",
+    "stylelint": "^16.24.0",
+    "stylelint-config-standard-scss": "^15.0.1",
+    "stylelint-scss": "^6.12.1"
   }
 }

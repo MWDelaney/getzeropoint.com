@@ -1,26 +1,63 @@
 :root {
-  /** Colors **/
-  --color: #404040;
-  --background-color: #fff;
-  --primary-color: #7950f2;
+  /**
+    Colors
+  */
+  --color-text: #222;
+  --color-background: white;
+  --color-light: #eee;
+  --color-primary: #7950f2;
   --gradientStart: #7950f2;
   --gradientEnd: #f783ac;
   --gradient: linear-gradient(45deg, var(--gradientStart) 10%, var(--gradientEnd) 90%);
 
-  /** Spacing **/
-  --unit: 1rem;
-  --radius: 4px;
 
-  /** Fonts **/
-  --font: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /**
+    Spacing and units
+  */
+  --unit: 1rem;
+  --container-width: 100ch;
+
+  /**
+    Fonts
+  */
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+
+  @media (prefers-color-scheme: dark) {
+    --color-text: #fff;
+    --color-background: #222;
+  }
+
+  /**
+    Borders
+  */
+  --border-gradient: linear-gradient(white, white) padding-box,
+              linear-gradient(to right, #7950f2, #f783ac) border-box;
+
+  /**
+    Shadows
+  */
+  --shadow: 5px 5px 15px 5px rgb(0 0 0 / 30%);
 
   /** Transitions **/
   --transition: all 0.15s ease-in-out;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color: #fff;
-    --background-color: #222;
+.gradient-border {
+  border-radius: var(--unit);
+  transform-style: preserve-3d;
+  border: 2px solid transparent;
+  background: var(--border-gradient);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: conic-gradient(from 90deg at 40% -25%, #f783ac, #7950f2);
+    filter: blur(4px);
+    transform: translate3d(0, 0, -1px);
+    border-radius: inherit;
+    pointer-events: none;
   }
 }

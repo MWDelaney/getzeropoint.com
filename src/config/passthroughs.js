@@ -5,21 +5,11 @@
 
 export default {
   /**
-   * Copy images to the `public` directory
+   * Copy fonts to the `public` directory
    */
-  images: async function (eleventyConfig) {
-    let config = { 'src/assets/images': 'assets/images' }
+  async fonts(eleventyConfig) {
+    const config = { 'src/assets/fonts': 'assets/fonts' };
 
     eleventyConfig.addPassthroughCopy(config);
   },
-
-
-  /**
-   * Copy fonts to the `public` directory
-   */
-  fonts: async function (eleventyConfig) {
-    let config = { 'src/assets/fonts': 'assets/fonts' }
-
-    eleventyConfig.addPassthroughCopy(config);
-  }
-}
+};

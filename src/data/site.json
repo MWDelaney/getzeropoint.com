@@ -1,4 +1,5 @@
 {
-  "siteName": "getzeropoint.com",
-  "siteUrl": "https://getzeropoint.com"
+  "name": "Get ZeroPoint",
+  "description": "A corporate-free website starter project that gets you up to zero.",
+  "type": "website"
 }

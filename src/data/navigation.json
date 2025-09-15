@@ -6,9 +6,19 @@
       "external": false
     },
     {
-      "text": "Documentation",
-      "url": "/documentation/",
-      "external": false
+      "text": "Starter",
+      "url": "https://github.com/MWDelaney/ZeroPoint",
+      "external": true
+    },
+    {
+      "text": "Components",
+      "url": "https://github.com/MWDelaney/eleventy-plugin-reusable-components",
+      "external": true
+    },
+    {
+      "text": "Deployment",
+      "url": "https://github.com/MWDelaney/eleventy-github-deployment",
+      "external": true
     }
   ]
 }
