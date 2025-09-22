@@ -250,6 +250,7 @@ pre {
   flex-direction: column;
   gap: var(--unit);
   list-style-type: none;
+  padding-left: 0;
 
   @container body (min-width: 100ch) {
     flex-direction: row;
