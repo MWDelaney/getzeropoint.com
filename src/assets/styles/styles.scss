@@ -9,7 +9,6 @@
  * ZeroPoint starter styling
 */
 body {
-  background-color: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-family-sans-serif);
   padding: 0 var(--unit);
@@ -26,13 +25,17 @@ a {
 }
 
 p,
-ol,
-ul {
+ul,
+details {
   margin-bottom: calc(var(--unit) * 2);
 
   &:has(+ pre) {
     margin-bottom: var(--unit);
   }
+}
+
+p:has(+ details) {
+  margin-bottom: calc(var(--unit) * 0.5);
 }
 
 .lead {
@@ -54,12 +57,8 @@ ul {
 #main {
   max-width: var(--container-width);
   margin: auto;
-  padding: var(--unit);
+  padding: calc(var(--unit) * 2) calc(var(--unit) * 3);
   position: relative;
-
-  @container body (min-width: 100ch) {
-    padding: calc(var(--unit) * 2) calc(var(--unit) * 3);
-  }
 }
 
 #navigation {
@@ -101,6 +100,19 @@ ul {
 #page-header {
   text-align: center;
   margin-bottom: calc(var(--unit) * 2);
+}
+
+#table-of-contents {
+  @extend .gradient-border;
+
+  text-align: left;
+  max-width: var(--container-width);
+  margin: var(--unit) auto;
+  padding: var(--unit);
+
+  h2 {
+    margin-top: 0;
+  }
 }
 
 hr {
@@ -150,12 +162,24 @@ label {
 }
 
 h2 {
-  margin-top: calc(var(--unit) * 2);
+  margin-top: calc(var(--unit) * 3);
 }
 
 ul,
 ol {
   margin-top: 0;
+}
+
+summary {
+  color: var(--color-primary);
+  font-size: calc(var(--unit));
+  white-space: normal;
+
+  &::after {
+    content: " (click to expand)";
+    font-size: calc(--var(--unit) * 0.5);
+    padding-left: calc(--var(--unit) * 0.5);
+  }
 }
 
 .text-gradient {
@@ -167,36 +191,27 @@ ol {
 .steps {
   list-style: none;
   counter-reset: step-counter;
-  margin-top: var(--unit);
-  padding-inline-start: calc(var(--unit) * 0.5);
+  margin-top: calc(var(--unit) * 3);
+  margin-bottom: calc(var(--unit) * 3);
 
   > li {
     background-color: var(--color-light);
     border-radius: var(--unit);
-    padding: var(--unit);
+    padding: var(--unit) calc(var(--unit) * 2);
     box-shadow: inset 0 0 2px 2px rgb(0 0 0 / 5%);
     margin-bottom: calc(var(--unit) * 3);
     counter-increment: step-counter;
     position: relative;
 
-    @container body (min-width: 100ch) {
-      padding: var(--unit) calc(var(--unit) * 2);
-    }
-
     &::before {
       @extend .text-gradient;
 
       content: counter(step-counter);
-      font-size: 2rem;
+      font-size: 5rem;
       font-weight: bold;
       position: absolute;
+      left: -4rem;
       transform: rotate(-4deg);
-      left: -2rem;
-
-      @container body (min-width: 100ch) {
-        font-size: 5rem;
-        left: -4rem;
-      }
     }
   }
 }
