@@ -28,6 +28,7 @@
     "@11ty/eleventy-img": "^6.0.2",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "@eslint/js": "^9.11.1",
+    "@uncenter/eleventy-plugin-toc": "^1.0.3",
     "cross-env": "^7.0.3",
     "eleventy-plugin-reusable-components": "^1.0.1",
     "esbuild": "^0.25.2",

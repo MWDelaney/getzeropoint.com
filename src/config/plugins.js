@@ -6,6 +6,7 @@
 import { eleventyImageTransformPlugin } from '@11ty/eleventy-img';
 import reusableComponents from "eleventy-plugin-reusable-components";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
+const pluginTOC = require('@uncenter/eleventy-plugin-toc');
 
 export default {
   /**
@@ -47,4 +48,11 @@ export default {
     // Add plugin to eleventyConfig
     eleventyConfig.addPlugin(syntaxHighlight);
   },
+
+  /**
+   * Table of Contents plugin
+   */
+  toc: async function (eleventyConfig) {
+    eleventyConfig.addPlugin(pluginTOC);
+  }
 };
