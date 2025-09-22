@@ -182,8 +182,8 @@ permalink: "/admin/config.yml.njk"
 # Backend configuration for Decap CMS/Sveltia CMS
 backend:
   name: github
-  branch: "{{ site.github_branch }}"
-  repo: "{{ site.github_repo }}"
+  branch: "{% raw %}{{ site.github_branch }}{% endraw %}"
+  repo: "{% raw %}{{ site.github_repo }}{% endraw %}"
 
 # Where uploaded media files are stored
 media_folder: "src/assets/images"
