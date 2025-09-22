@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: ZeroPoint - A corporate-free website starting point
+title: ZeroPoint - A corporate-free website starter project
 ---
 
 <figure class="logo">
@@ -34,15 +34,13 @@ title: ZeroPoint - A corporate-free website starting point
     </p>
   </header>
 
-<h2>A <strong class="text-gradient">corporate-free</strong> website starter project that gets you up to zero.</h2>
+<h2 id="about">A <strong class="text-gradient">corporate-free</strong> website starter project that gets you up to zero.</h2>
 
 <p class="lead">ZeroPoint is a free and open-source website starter project that helps you get your website project up and running quickly.</p>
 
-<p class="lead">Focusing on simplicity, version control, and native web technology, ZeroPoint provides a solid foundation for your website without the bloat of unnecessary databases, server-side languages, frameworks, or monolithic content management systems.</p>
+<p class="lead">Focusing on simplicity, version control, and native web technology, ZeroPoint provides a solid foundation for your website without the bloat of unnecessary databases, server-side languages, frameworks or monolithic content management systems.</p>
 
-<p class="lead">Just clean, future-proof HTML, CSS and JavaScript</p>
-
-<h3>Features</h3>
+<h3 id="features">Features</h3>
 <ul>
   <li>🏗️ Static site generation with <a href="https://www.11ty.dev/">Eleventy</a></li>
   <li>🧩 Reusable components with <a href="https://github.com/MWDelaney/eleventy-plugin-reusable-components">Eleventy Reusable Components</a></li>
@@ -51,15 +49,15 @@ title: ZeroPoint - A corporate-free website starting point
   <li>📄 Example content types and site data</li>
   <li>⚙️ Custom fields built in!</li>
   <li>🎨 Sass and Javascript asset pipelines</li>
-  <li>🔧 Extensible to add content management, e-commerce, contact forms, and more.</li>
+  <li>🔧 Extensible to add <a href="#adding-a-cms">content management</a>, e-commerce, contact forms, and more.</li>
   <li>🆓 <strong>Free from corporate ownership and tracking</strong></li>
 </ul>
 
-<h2>Get Started with ZeroPoint</h2>
+<h2 id="get-started">Get Started with ZeroPoint</h2>
 
 <ol class="steps">
   <li>
-    <h3>You have to start somewhere</h3>
+    <h3 id="you-have-to-start-somewhere">You have to start somewhere</h3>
 
     <p>Generate a new GitHub repository using the ZeroPoint template (click <a href="https://github.com/MWDelaney/ZeroPoint/generate">here</a>) or using GitHub CLI:</p>
 
@@ -89,11 +87,9 @@ title: ZeroPoint - A corporate-free website starting point
     <p>See the complete <a href="https://github.com/MWDelaney/ZeroPoint/">ZeroPoint Starter documentation</a> to keep going!</p>
   </li>
   <li>
-    <h3>Building with Blocks</h3>
+    <h3 id="build-with-components">Build with Components</h3>
 
     <p>Create reusable HTML components, patterns, and templates using <a href="https://github.com/MWDelaney/eleventy-plugin-reusable-components">Eleventy Reusable Components</a>.</p>
-
-    <p>👉 Build your components once and use them anywhere.</p>
 
     <p>Install the Eleventy Reusable Components plugin:</p>
 
@@ -116,10 +112,184 @@ export default function (eleventyConfig) {
       See the <a href="https://github.com/MWDelaney/eleventy-plugin-reusable-components">Eleventy Reusable Components documentation</a> for details on creating and using your first component.
   </li>
   <li>
-    <h3>Deploy to the web</h3>
+    <h3 id="deploy-to-the-web">Deploy to the web</h3>
 
-    <p>Deploy your site to the web using Netlify, Cloudflare Pages, Vercel, or your favorite hosting provider.</p>
+    <p>Deploy your site to the web using Netlify, Cloudflare Pages, or your favorite hosting provider.</p>
 
     <p>We maintain a set of <a href="https://github.com/MWDelaney/eleventy-github-deployment">example GitHub Actions and Workflows</a> along with documentation to help you get your site online.</p>
   </li>
 </ol>
+
+<hr>
+
+<h2 id="adding-a-cms">Adding a Content Management System</h2>
+<p>Adding a CMS to ZeroPoint is easy, because the your content is already separate and well structured.</p>
+<p>This example recommends a Git-based CMS like <a href="https://decapcms.org/">Decap CMS</a> or <a href="http://sveltiacms.app/">Sveltia</a>, because they're free, open-source, and don't require an additional server</p>
+<p>To add Decap CMS to your ZeroPoint site, follow these steps:</p>
+
+<ol class="steps">
+  <li>
+    <h3 id="create-cms-files">Create two files</h3>
+    <p>Adding Decap CMS or Sveltia to ZeroPoint is as simple as adding two files to your project. Both CMSes use a cross-compatible yaml-formatted configuration file, so switching between CMSes is straightforward. Feel free to try both!</p>
+
+    <p>Decap CMS and Sveltia both run in the web browser, requiring no additional server infrastructure. Each authenticates users via GitHub.</p>
+
+    <p>Add <code>admin.yml</code> and <code>config.yml</code> to your <code>content/admin</code> directory.</p>
+
+    <ol>
+      <li>
+        <h4><code>content/admin/admin.yml</code></h4>
+        <p>This file is responsible for rendering the CMS interface.</p>
+        <details>
+          <summary><code>content/admin/admin.yml</code></summary>
+          {% highlight "html" %}
+---
+permalink: '/admin/index.html'
+eleventyExcludeFromCollections: true
+---
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Manager</title>
+
+</head>
+<body>
+  <!--
+    If you want to use Decap CMS instead of Sveltia CMS, uncomment the following line and
+    comment out the Sveltia CMS line below.
+  -->
+  <!-- <script src="https://unpkg.com/decap-cms@^3.8.3/dist/decap-cms.js"></script> -->
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+
+</body>
+</html>
+    {% endhighlight %}
+      </li>
+      <li>
+        <h4><code>content/admin/config.yml.njk</code></h4>
+        <p>This file configures your CMS collections and settings.</p>
+        <details>
+          <summary><code>content/admin/config.yml.njk</code></summary>
+
+{% highlight "yaml" %}
+---
+eleventyExcludeFromCollections: true
+permalink: "/admin/config.yml.njk"
+---
+
+# Backend configuration for Decap CMS/Sveltia CMS
+backend:
+  name: github
+  branch: "{{ site.github_branch }}"
+  repo: "{{ site.github_repo }}"
+
+# Where uploaded media files are stored
+media_folder: "src/assets/images"
+public_folder: "/assets/images"
+
+# Collections define editable content types in the CMS
+
+# Pages
+collections:
+  - name: "pages"
+    label: "Pages"
+    editor:
+      preview: false
+    folder: "src/content/pages"
+    create: true
+    extension: "njk"
+    format: "frontmatter"
+    nested:
+      depth: 100 # max depth to show in the collection tree
+      summary: '{{ "{{title}}" }}' # optional summary for a tree node, defaults to the inferred title field
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Permalink Override (Default: '/your-title/')", name: "permalink", widget: "string", required: false }
+      - { label: "Content", name: "body", widget: "markdown" }
+
+  # Posts (uncomment if your site has blog posts)
+  # - name: "posts"
+  #   label: "Blog Posts"
+  #   editor:
+  #     preview: true
+  #   folder: "src/content/posts"
+  #   create: true
+  #   extension: "md"
+  #   format: "frontmatter"
+  #   sortable_fields:
+  #     - { field: "date", direction: "desc" }
+  #   fields:
+  #     - { label: "Title", name: "title", widget: "string" }
+  #     - { label: "Publish Date", name: "date", widget: "datetime" }
+  #     - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
+  #     - { label: "Content", name: "body", widget: "markdown" }
+
+  # Global settings and navigation
+  - name: "settings"
+    label: "Settings"
+    editor:
+      preview: false
+    files:
+      # Global site settings (site name, description, type)
+      - label: "Global Settings"
+        name: "site"
+        file: "src/data/site.json"
+        fields:
+          - { label: "Name", name: "name", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Type", name: "type", widget: "string" }
+      # Navigation settings (menu items and structure)
+      - label: "Navigation"
+        name: "nav"
+        file: "src/data/navigation.json"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - label: "Text"
+                name: "text"
+                widget: "string"
+              - label: "URL"
+                name: "url"
+                widget: "string"
+              - label: "External"
+                name: "external"
+                widget: "boolean"
+              - label: "Sub Items"
+                name: "subitems"
+                widget: "list"
+                fields:
+                  - label: "Text"
+                    name: "text"
+                    widget: "string"
+                  - label: "URL"
+                    name: "url"
+                    widget: "string"
+                  - label: "External"
+                    name: "external"
+                    widget: "boolean"
+{%- endhighlight -%}
+        </details>
+      </li>
+    </ol>
+
+  </li>
+  <li>
+    <h3 id="customize-your-cms">Customize your CMS</h3>
+    <p>The example configuration above includes three collections: pages, posts, and settings. You can customize these collections to fit your content structure.</p>
+
+    <p>For more information on configuring Decap CMS or Sveltia, see their respective documentation:</p>
+    <ul>
+      <li><a href="https://decapcms.org/">Decap CMS Documentation</a></li>
+      <li><a href="https://sveltiacms.app">Sveltia Documentation</a></li>
+    </ul>
+  </li>
+  <li>
+    <h3 id="access-your-cms">Access your CMS</h3>
+    <p>Once you've added the necessary files and configured your collections, you can access your CMS at <code>/admin/</code> on your site either locally or on the web!</p>
+
+    <p>Log in using your GitHub account to start managing your content!</p>
+  </li>
