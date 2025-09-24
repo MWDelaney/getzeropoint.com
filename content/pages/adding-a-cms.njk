@@ -1,0 +1,234 @@
+---
+title: Adding a CMS
+permalink: /adding-a-cms/
+---
+
+<h1 id="adding-a-cms">Adding a CMS to <strong class="text-gradient">ZeroPoint Starter</strong></h1>
+
+<p style="text-align: center">Work better from an example?</p>
+<ul class="buttons">
+  <li>
+    <a class="button button-launch" href="https://github.com/MWDelaney/ZeroPoint-Admin">Look at the code</a>
+  </li>
+</ul>
+
+<p class="lead">Static site generators like <a href="https://www.11ty.dev/">Eleventy</a> (used in ZeroPoint) can be difficult for stakeholders to buy into because they don't have a familiar user experience.</p>
+<p class="lead">Adding a git-based CMS like <a href="https://decapcms.org/">Decap CMS</a> (formerly Netlify CMS) or <a href="http://sveltiacms.app/">Sveltia CMS</a> to ZeroPoint Starter can provide a clear, understandable user interface for content editors and stakeholders looking for a more intuitive, "product"-like editing experience offered by monolithic content management systems.</p>
+<p class="lead">Both Decap CMS and Sveltia CMS are free, open-source, offer useful feature sets, community support, and don't require an additional server. <strong>Everything is still static.</strong></p>
+<h2>Advantages of a Git-based CMS</h2>
+<ul>
+  <li>🔗 Integrates directly with ZeroPoint's git-based workflow</li>
+  <li>🗂️ Content is kept in version control</li>
+  <li>🛠️ No need for a separate database or server</li>
+  <li>👩‍💻 Familiar interface for developers and content editors</li>
+</ul>
+
+<h2 id="steps">Steps to Add a CMS to ZeroPoint</h2>
+<ol class="steps">
+  <li>
+    <h3 id="create-cms-files">Create two files</h3>
+    <p>Adding Decap CMS or Sveltia to ZeroPoint is as simple as adding two files to your project. Both CMSes use a cross-compatible yaml-formatted configuration file, so switching between CMSes is straightforward. Feel free to try both!</p>
+    <p>Decap CMS and Sveltia both run in the web browser, requiring no additional server infrastructure. Each authenticates users via GitHub.</p>
+    <p>Add <code>admin.yml</code> and <code>config.yml</code> to your <code>content/admin</code> directory.</p>
+
+    <ol>
+      <li>
+        <h4><code>content/admin/admin.yml</code></h4>
+        <p>This file is responsible for rendering the CMS interface.</p>
+        <details>
+          <summary><code>content/admin/admin.yml</code></summary>
+{% highlight "html" %}
+---
+permalink: '/admin/index.html'
+eleventyExcludeFromCollections: true
+---
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Manager</title>
+
+</head>
+<body>
+  <!--
+    If you want to use Decap CMS instead of Sveltia CMS, uncomment the following line and
+    comment out the Sveltia CMS line below.
+  -->
+  <!-- <script src="https://unpkg.com/decap-cms@^3.8.3/dist/decap-cms.js"></script> -->
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+
+</body>
+</html>
+{% endhighlight %}
+        </details>
+      </li>
+      <li>
+        <h4><code>content/admin/config.yml.njk</code></h4>
+        <p>This file configures your CMS collections and settings.</p>
+        <details>
+          <summary><code>content/admin/config.yml.njk</code></summary>
+
+{% highlight "yaml" %}
+---
+eleventyExcludeFromCollections: true
+permalink: "/admin/config.yml.njk"
+---
+
+# Branding and configuration
+logo_url: "/assets/images/favicon.svg"
+site_url: "{% raw %}{{ site.url }}{% endraw %}"
+locale: "en"
+
+# Backend configuration for Decap CMS/Sveltia CMS
+backend:
+  name: github
+  branch: "{% raw %}{{ site.github_branch }}{% endraw %}"
+  repo: "{% raw %}{{ site.github_repo }}{% endraw %}"
+
+# Where uploaded media files are stored
+media_folder: "src/assets/images"
+public_folder: "/assets/images"
+
+# Collections define editable content types in the CMS
+
+# Pages
+collections:
+  - name: "pages"
+    label: "Pages"
+    editor:
+      preview: false
+    folder: "src/content/pages"
+    create: true
+    extension: "njk"
+    format: "frontmatter"
+    nested:
+      depth: 100 # max depth to show in the collection tree
+      summary: '{{ "{{title}}" }}' # optional summary for a tree node, defaults to the inferred title field
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Permalink Override (Default: '/your-title/')", name: "permalink", widget: "string", required: false }
+      - { label: "Content", name: "body", widget: "markdown" }
+
+  # Posts (uncomment if your site has blog posts)
+  # - name: "posts"
+  #   label: "Blog Posts"
+  #   editor:
+  #     preview: true
+  #   folder: "src/content/posts"
+  #   create: true
+  #   extension: "md"
+  #   format: "frontmatter"
+  #   sortable_fields:
+  #     - { field: "date", direction: "desc" }
+  #   fields:
+  #     - { label: "Title", name: "title", widget: "string" }
+  #     - { label: "Publish Date", name: "date", widget: "datetime" }
+  #     - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
+  #     - { label: "Content", name: "body", widget: "markdown" }
+
+  # Global settings and navigation
+  - name: "settings"
+    label: "Settings"
+    editor:
+      preview: false
+    files:
+      # Global site settings (site name, description, type)
+      - label: "Global Settings"
+        name: "site"
+        file: "src/data/site.json"
+        fields:
+          - { label: "Name", name: "name", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Type", name: "type", widget: "string" }
+      # Navigation settings (menu items and structure)
+      - label: "Navigation"
+        name: "nav"
+        file: "src/data/navigation.json"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - label: "Text"
+                name: "text"
+                widget: "string"
+              - label: "URL"
+                name: "url"
+                widget: "string"
+              - label: "External"
+                name: "external"
+                widget: "boolean"
+              - label: "Sub Items"
+                name: "subitems"
+                widget: "list"
+                fields:
+                  - label: "Text"
+                    name: "text"
+                    widget: "string"
+                  - label: "URL"
+                    name: "url"
+                    widget: "string"
+                  - label: "External"
+                    name: "external"
+                    widget: "boolean"
+{%- endhighlight -%}
+        </details>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <h3 id="access-your-cms">Access your CMS</h3>
+    <p>Once you've added the necessary files and configured your collections, you can access your CMS at <code>/admin/</code> on your site either locally or on the web!</p>
+
+    <p>Log in using your GitHub account to start managing your content!</p>
+  </li>
+  <li>
+    <h3 id="customize-your-cms">Customize your CMS</h3>
+    <p>The example configuration above includes three collections: pages, posts, and settings. You can customize these collections to fit your content structure.</p>
+
+    <p>For more information on configuring Decap CMS or Sveltia, see their respective documentation:</p>
+    <ul>
+      <li><a href="https://decapcms.org/">Decap CMS Documentation</a></li>
+      <li><a href="https://sveltiacms.app">Sveltia Documentation</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="advanced-cms-options">Advanced Examples</h2>
+<p>Some advanced examples of CMS configurations.</p>
+<ol class="steps">
+  <li>
+    <h3 id="dont-deploy-cms">Don't deploy the CMS to production</h3>
+    <p>Limit content management to your local or staging environments can help assure that content changes are reviewed before going live.</p>
+    <p>To prevent the CMS from being deployed to production, add <code>admin.11tydata.js</code> to your <code>content/admin</code> directory with the following content:</p>
+    <h3><code>content/admin/admin.11tydata.js</code></h3>
+{% highlight "js" %}
+/**
+ * Eleventy directory data file for src/content/admin
+ * Sets permalink: false for all files in this directory if ELEVENTY_ENV is 'production'.
+ * Otherwise, leaves permalink untouched (default behavior).
+ *
+ * @see https://www.11ty.dev/docs/data-computed/
+ * @see https://www.11ty.dev/docs/permalinks/
+ */
+export default {
+  eleventyComputed: {
+    permalink: (data) => {
+      if (process.env.ELEVENTY_ENV === 'production') {
+        return false;
+      }
+      // Let individual file/frontmatter control permalink in non-production
+      return data.permalink;
+    },
+  },
+};
+{% endhighlight %}
+      </li>
+</ol>
+
+<ul class="buttons">
+  <li>
+    <a class="button button-launch" href="/">Back Home</a>
+  </li>
+</ul>
