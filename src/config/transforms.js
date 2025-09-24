@@ -20,7 +20,7 @@ export default {
         for (const type of types) {
           if (this.page.outputPath.endsWith(type)) {
             return beautify.html(content, {
-              indent_size: (process.env.ELEVENTY_ENV === 'production' ? 0 : 2),
+              indent_size: 2,
               indent_char: ' ',
               max_preserve_newlines: 1,
               preserve_newlines: false,
