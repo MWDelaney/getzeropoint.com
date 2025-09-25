@@ -50,21 +50,21 @@ export default function (eleventyConfig) {
 title: Text
 
 # Default Values
-value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+textContent: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
 # CMS fields
 cms:
-  - label: "Value"
-    name: "value"
+  - label: "Text Content"
+    name: "textContent"
     widget: "markdown"
 ---
 
 <section class="component component-{% raw %}{{ title | slugify }}{% endraw %}">
-  {% raw %}{{- value | safe -}}{% endraw %}
+  {% raw %}{{- textContent | safe -}}{% endraw %}
 </section>
 {% endhighlight %}
 
-      <p>This component has a single field, <code>value</code>. The default value is a block of placeholder text.</p>
+      <p>This component has a single field, <code>textContent</code>. The default value is a block of placeholder text.</p>
 
       <h3 id="use-your-component">Use Your Component</h3>
       <p>Open any page on your site and add the following anywhere in the content:</p>
