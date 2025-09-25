@@ -1,0 +1,161 @@
+---
+title: Building with Blocks
+permalink: /building-with-blocks/
+---
+
+<h1>Building a static website with reusable blocks, using <strong class="text-gradient">ZeroPoint Starter</strong></h1>
+<p class="lead">Blocks, components, modules, widgets, partials, or whatever you call them are a common way designers and stakeholders expect to visualize websites.</p>
+<p class="lead">ZeroPoint Starter includes <a href="https://github.com/MWDelaney/eleventy-plugin-reusable-components">eleventy-plugin-reusable-components</a> preconfigured (and commented out), which makes it easy to create and manage reusable HTML components.</p>
+<p class="lead">This guide will show you how to install and configure the plugin and create your first reusable block. In the <a href="#advanced-usage">Advanced Usage</a> section, you'll learn how to integrate reusable blocks with a git-based CMS like <a href="https://decapcms.org/">Decap CMS</a> or <a href="https://sveltiacms.app">Sveltia CMS</a>.</p>
+
+<h2>Advantages of Reusable Blocks</h2>
+<ul>
+  <li>🧱 Build pages with pre-designed blocks</li>
+  <li>🔄 Easily update content across multiple pages</li>
+  <li>🎨 Maintain consistent design and layout</li>
+  <li>⚙️ Simplify collaboration between designers and developers</li>
+</ul>
+
+<h2>Get Started with Reusable Blocks</h2>
+<ol class="steps">
+  <li>
+    <h3 id="install-the-plugin">Install the Plugin</h3>
+    <p>Install the Eleventy Reusable Components plugin:</p>
+
+{% highlight "bash" %}
+  npm install --save-dev eleventy-plugin-reusable-components
+{% endhighlight %}
+    </li>
+  <li>
+    <h3 id="configure-the-plugin">Configure the Plugin</h3>
+    <p>Uncomment the plugin's configuration in <code>src/config/plugins.js</code>:</p>
+
+{% highlight "js" %}
+import reusableComponents from "eleventy-plugin-reusable-components";
+
+export default function (eleventyConfig) {
+  eleventyConfig.addPlugin(reusableComponents, {
+    componentsDir: "src/assets/components/*.njk"
+  });
+}
+{% endhighlight %}
+
+  </li>
+  <li>
+    <h3 id="create-your-first-component">Create Your First Component</h3>
+    <p>Create a new file in the <code>src/assets/components/</code> directory named <code>text.njk</code>:</p>
+{% highlight "markdown" %}
+---
+# Required fields
+title: Text
+
+# Default Values
+value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+
+# CMS fields
+cms:
+  - label: "Value"
+    name: "value"
+    widget: "markdown"
+---
+
+<section class="component component-{% raw %}{{ title | slugify }}{% endraw %}">
+  {% raw %}{{- value | safe -}}{% endraw %}
+</section>
+{% endhighlight %}
+
+      <p>This component has a single field, <code>value</code>. The default value is a block of placeholder text.</p>
+
+      <h3 id="use-your-component">Use Your Component</h3>
+      <p>Open any page on your site and add the following anywhere in the content:</p>
+{% highlight "njk" %}
+{% raw %}{{-
+  {
+    "type": "text",
+    "value": "Hello, world!"
+  } | renderComponent | safe
+-}}{% endraw %}
+{% endhighlight %}
+    See the <a href="https://github.com/MWDelaney/eleventy-plugin-reusable-components">Eleventy Reusable Components documentation</a> for complete usage instructions.
+    </li>
+</ul>
+
+<h2 id="advanced-usage">Advanced Usage</h2>
+<ol class="steps">
+  <li>
+    <h3 id="use-components-in-a-cms">Use Components in a CMS</h3>
+    <p>Eleventy's <a href="https://www.11ty.dev/docs/data-cascade/">data cascade</a> makes it easy to integrate reusable components with a CMS like <a href="https://decapcms.org/">Decap CMS</a> or <a href="https://sveltiacms.app">Sveltia</a>.</p>
+
+    <ol>
+      <li>
+        <h4 id="install-a-cms">Install a CMS</h4>
+        <p>Follow the <a href="/adding-a-cms/">Adding a CMS</a> guide.</p>
+      </li>
+
+      <li>
+        <h4 id="generate-editor-components">Generate Editor Components</h4>
+        <p>To make your reusable components available in the CMS editor, create a new file named <code>content/admin/editor-components.js.jk</code> with the following content:</p>
+        <details>
+          <summary><code>content/admin/editor-components.js.njk</code></summary>
+{% highlight "js" %}
+---
+eleventyExcludeFromCollections: true
+permalink: "/admin/editor-components.js"
+---
+
+const componentData = [
+{% for component in collections.components %}
+  {
+    name: "{{ component.data.title | slugify }}",
+    label: "{{ component.data.title }}",
+    fields: {{ component.data.cms | dump | safe }}
+  },
+{% endfor %}
+];
+
+componentData.forEach(data => {
+  window.CMS.registerEditorComponent({
+    id: `${data.name}-component`,
+    label: data.label,
+    fields: data.fields,
+    pattern: new RegExp(
+      String.raw`^\{\{\-?\s*\{(?=[^}]*\n?"type":\s*"${data.name}")([\s\S]*?)\}\s*\|\s*renderComponent\s*\|\s*safe\s*\-?\}\}$`
+    ),
+
+    fromBlock: function(match) {
+      let props = {};
+      try {
+        props = JSON.parse('{' + match[1].trim() + '}');
+      } catch (e) {
+        console.error('Error parsing block JSON:', match[1], e);
+        return {};
+      }
+      return props;
+    },
+
+    toBlock: function(obj) {
+      // Serialize all field values (not just obj.props)
+      var json = JSON.stringify(obj, null, 2);
+      // Add a line break before the type as the first json object key
+      json = json.replace(/^{/, '{\n"type": "' + data.name + '",');
+      return '{\{- ' + json + ' | renderComponent | safe -}\}';
+    },
+
+    toPreview: function(obj) {
+      return `<div style='border:1px solid #ccc;padding:1em;'><strong>${data.label}</strong><pre>${JSON.stringify(obj.props, null, 2)}</pre></div>`;
+    }
+  });
+});
+{% endhighlight %}
+      </details>
+      <p>This file generates a JavaScript array of your reusable components and registers them with the CMS.</p>
+      <p>Next, include this file in your CMS admin interface by adding the following line to <code>content/admin/admin.yml</code>:</p>
+{% highlight "html" %}
+<script src="/admin/editor-components.js"></script>
+{% endhighlight %}
+
+      <p>You can now add your reusable components to any page managed by the CMS!</p>
+    </li>
+  </ol>
+  </li>
+</ol>
