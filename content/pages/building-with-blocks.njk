@@ -149,10 +149,17 @@ componentData.forEach(data => {
 {% endhighlight %}
       </details>
       <p>This file generates a JavaScript array of your reusable components and registers them with the CMS.</p>
-      <p>Next, include this file in your CMS admin interface by adding the following line to <code>content/admin/admin.yml</code>:</p>
+    </li>
+    <li>
+      <h4 id="configure-the-cms">Add the Script to the CMS Template</h4>
+      <p>Add the following line to <code>content/admin/admin.yml</code>:</p>
+
+      <details>
+        <summary><code>content/admin/admin.yml</code></summary>
 {% highlight "html" %}
 <script src="/admin/editor-components.js"></script>
 {% endhighlight %}
+      </details>
 
       <p>You can now add your reusable components to any page managed by the CMS!</p>
     </li>
