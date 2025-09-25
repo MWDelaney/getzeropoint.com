@@ -60,7 +60,7 @@ cms:
 ---
 
 <section class="component component-{% raw %}{{ title | slugify }}{% endraw %}">
-  {% raw %}{{- textContent | safe -}}{% endraw %}
+  {% raw %}{{- textContent | markdown | safe -}}{% endraw %}
 </section>
 {% endhighlight %}
 
