@@ -18,6 +18,9 @@
     {#- Skip to content link -#}
     <a class="visually-hidden" href="#main">Skip to content</a>
 
+    {#- Site header with navigation -#}
+    {%- include "partials/navigation.njk" -%}
+
     {#- Main content -#}
     <main id="main" tabindex="-1" data-pagefind-body>
       <figure class="logo">
@@ -45,6 +48,7 @@
     </aside>
 
     {#- Site header with navigation -#}
+    {%- set navigation = footernavigation %}
     {%- include "partials/navigation.njk" -%}
 
       {%- year -%} &copy; {{ site.name }}

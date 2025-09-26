@@ -4,7 +4,7 @@ description: Building a static website with reusable blocks, using ZeroPoint Sta
 permalink: /building-with-blocks/
 ---
 
-<h1>Building a static website with reusable blocks, using <strong class="text-gradient">ZeroPoint Starter</strong></h1>
+<h1>Building Reusable Blocks for <strong class="text-gradient">ZeroPoint Starter</strong></h1>
 <p class="lead">Blocks, components, modules, widgets, partials, or whatever you call them are a common way designers and stakeholders expect to visualize websites.</p>
 <p class="lead">ZeroPoint Starter includes <a href="https://github.com/MWDelaney/eleventy-plugin-reusable-components">eleventy-plugin-reusable-components</a> preconfigured (and commented out), which makes it easy to create and manage reusable HTML components.</p>
 <p class="lead">This guide will show you how to install and configure the plugin and create your first reusable block. In the <a href="#advanced-usage">Advanced Usage</a> section, you'll learn how to integrate reusable blocks with a git-based CMS like <a href="https://decapcms.org/">Decap CMS</a> or <a href="https://sveltiacms.app">Sveltia CMS</a>.</p>
@@ -61,6 +61,8 @@ async reusableComponents (eleventyConfig) {
     <p>Create a new file in the <code>src/assets/components/</code> directory named <code>text.njk</code>:</p>
 {% highlight "markdown" %}
 ---
+# A simple text block
+
 # Required fields
 title: Text
 
@@ -87,12 +89,123 @@ cms:
 {% raw %}{{-
   {
     "type": "text",
-    "value": "Hello, world!"
+    "textContent": "Hello, world!"
   } | renderComponent | safe
 -}}{% endraw %}
 {% endhighlight %}
-    See the <a href="https://github.com/MWDelaney/eleventy-plugin-reusable-components">Eleventy Reusable Components documentation</a> for complete usage instructions.
-    </li>
+    <p>See the <a href="https://github.com/MWDelaney/eleventy-plugin-reusable-components">Eleventy Reusable Components documentation</a> for complete usage instructions.</p>
+
+    <h3 id="complete-example">A More Complicated Example</h3>
+    <p>Here's a more complex example of a reusable component named <code>call-to-action.njk</code>:</p>
+
+    <details>
+      <summary><code>src/assets/components/call-to-action.njk</code></summary>
+{% highlight "markdown" %}
+---
+# A call to action block with optional heading, text, image, and links
+
+# Required fields
+title: Call to Action
+
+# Default Values
+heading: "Join Our Newsletter"
+textContent: "Our newsletter is sent out monthly. We respect your privacy and you can unsubscribe at any time."
+image: "/assets/images/newsletter.png"
+imageAlt: "Newsletter placeholder image"
+links:
+  - label: "Subscribe Now"
+    url: "/subscribe/"
+    style: "primary"
+  - label: "Learn More"
+    url: "/about/"
+    style: "secondary"
+
+# CMS fields
+cms:
+  - label: "Heading"
+    name: "heading"
+    widget: "string"
+  - label: "Image"
+    name: "image"
+    widget: "image"
+  - label: "Image Alt Text"
+    name: "imageAlt"
+    widget: "string"
+  - label: "Text Content"
+    name: "textContent"
+    widget: "markdown"
+  - label: "Links"
+    name: "links"
+    widget: "list"
+    fields:
+      - label: "Label"
+        name: "label"
+        widget: "string"
+      - label: "URL"
+        name: "url"
+        widget: "string"
+      - label: "Style"
+        name: "style"
+        widget: "select"
+        options:
+          - label: Primary
+            value: primary
+          - label: Secondary
+            value: secondary
+          - label: Tertiary
+            value: tertiary
+---
+
+<section class="component component-{% raw %}{{ title | slugify }}{% endraw %}">
+  {% raw %}{%- if heading -%}{% endraw %}
+  <header>
+    <h2>{% raw %}{{ heading }}{% endraw %}</h2>
+  </header>
+  {% raw %}{%- endif -%}{% endraw %}
+  {% raw %}{%- if image -%}{% endraw %}
+  <figure>
+    <img src="{% raw %}{{ image }}{% endraw %}" alt="{% raw %}{{ imageAlt }}{% endraw %}">
+  </figure>
+  {% raw %}{%- endif -%}{% endraw %}
+  {% raw %}{%- if textContent -%}{% endraw %}
+  <article class="text-content">
+    {% raw %}{{- textContent | markdown | safe -}}{% endraw %}
+  </article>
+  {% raw %}{%- endif -%}{% endraw %}
+  {% raw %}{%- if links and links.length -%}{% endraw %}
+  <footer>
+    {% raw %}{% for link in links %}{% endraw %}
+      <a href="{% raw %}{{ link.url }}{% endraw %}" class="button button-{% raw %}{{ link.style }}{% endraw %}">
+        {% raw %}{{ link.label }}{% endraw %}
+      </a>
+    {% raw %}{% endfor %}{% endraw %}
+  </footer>
+</section>
+{% endhighlight %}
+    </details>
+
+    <p>To use this component in a page, <a href="/adding-a-cms/">use the CMS</a> or add the following code to any page:</p>
+    <details>
+      <summary><code>content/pages/example-page.njk</code></summary>
+{% highlight "njk" %}
+{% raw %}{{-
+  {
+    "type": "call-to-action",
+    "heading": "Join the 11ty Meetup!",
+    "textContent": "The official 11ty Meetup is a great way to connect with other Eleventy users, share your projects, and learn new tips and tricks.",
+    "image": "/assets/images/meetup.png",
+    "imageAlt": "11ty Meetup logo",
+    "links": [
+      { "label": "Learn More", "url": "https://11tymeetup.dev", "style": "primary" },
+      { "label": "Sign Up for Updates", "url": "https://11tymeetup.dev/#newsletter", "style": "secondary" }
+    ]
+  } | renderComponent | safe
+-}}{% endraw %}
+{% endhighlight %}
+    </details>
+    <p>This will render a call-to-action block with a heading, image, text content, and two buttons.</p>
+
+</li>
 </ul>
 
 <h2 id="advanced-usage">Advanced Usage</h2>
