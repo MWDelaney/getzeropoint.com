@@ -181,6 +181,13 @@ cms:
     {% raw %}{% endfor %}{% endraw %}
   </footer>
 </section>
+
+{% raw %}{%- componentCss %}{% endraw %}
+  .component-{% raw %}{{ title | slugify }}{% endraw %} {
+    border: 2px spolid var(--color-primary);
+    padding: var(--unit);
+  }
+{% raw %}{%- endcomponentCss %}{% endraw %}
 {% endhighlight %}
     </details>
 
