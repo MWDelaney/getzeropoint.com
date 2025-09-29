@@ -5,10 +5,17 @@
   --color-text: #222;
   --color-background: white;
   --color-light: #eee;
+  --color-dark: #222;
   --color-primary: #7950f2;
-  --gradientStart: #7950f2;
-  --gradientEnd: #f783ac;
-  --gradient: linear-gradient(45deg, var(--gradientStart) 10%, var(--gradientEnd) 90%);
+  --color-secondary: #f783ac;
+  --color-contrast-primary: #fff;
+  --color-contrast-secondary: #222;
+  --color-contrast-light: #222;
+  --color-contrast-dark: #fff;
+  --color-contrast-background: #fff;
+  --gradient-start: #7950f2;
+  --gradient-end: #f783ac;
+  --gradient: linear-gradient(45deg, var(--gradient-start) 10%, var(--gradient-end) 90%);
 
   @media (prefers-color-scheme: dark) {
     --color-text: #fff;
@@ -21,6 +28,15 @@
   */
   --unit: 1rem;
   --container-width: 100ch;
+  --border-radius: var(--unit);
+
+  /**
+  * Media Queries
+  */
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
 
   /**
     Fonts

@@ -1,0 +1,56 @@
+---
+# Required fields
+title: Link Group
+description: A group of links, typically used for navigation or related resources.
+
+# Default values
+links:
+  - link: "#"
+    linkText: Lorem Ipsum
+  - link: "#"
+    linkText: Dolor Sit Amet
+  - link: "#"
+    linkText: Consectetur
+
+# CMS Fields
+cms:
+  - name: links
+    label: Links
+    widget: list
+    listItemLabel: Link
+    fields:
+      - name: link
+        label: Link URL
+        widget: string
+      - name: linkText
+        label: Link Text
+        widget: string
+---
+
+{# Optional component CSS #}
+{%- componentCss -%}
+.block-link-group nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--unit);
+  flex-wrap: wrap;
+}
+
+@media (min-width: 992px) {
+  .block-link-group nav {
+    flex-direction: row;
+  }
+}
+{%- endcomponentCss -%}
+
+{# Component HTML, using the default values above #}
+<section class="block block-{{ title | slugify }}">
+  <div class="container">
+    <nav>
+      {%- for link in links -%}
+        <a href="{{ link.link }}">{{ link.linkText }}</a>
+      {%- endfor -%}
+    </nav>
+  </div>
+</section>

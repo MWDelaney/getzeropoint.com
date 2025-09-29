@@ -16,6 +16,7 @@
 export default {
   eleventyComputed: {
     // Generate permalink URLs for pages
+    layout: "page.njk",
     permalink: (data) => {
       // If the page has an explicit permalink, use it
       if (data.permalink) return data.permalink;

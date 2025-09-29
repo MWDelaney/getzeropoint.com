@@ -1,0 +1,20 @@
+  <div class="block-library-block-content">
+    <h3>Block Preview</h3>
+    <div class="block-preview" id="{{ title | slugify }}-rendered">
+      {{ content | safe }}
+    </div>
+    <h3>Block Source Code</h3>
+    <div class="block-source" id="{{ item.data.title | slugify }}-source">
+      <details>
+        <summary>Show / hide source code</summary>
+        <div class="component-wrapper">
+          {% highlight "yml" %}
+          {{- item | getFrontmatter | safe -}}
+          {% endhighlight %}
+          {% highlight "html" %}
+          {{- item.rawInput | safe -}}
+          {% endhighlight %}
+        </div>
+      </details>
+    </div>
+  </div>

@@ -1,3 +1,4 @@
 {
-  "sitemapIgnore" : true
+  "sitemapIgnore" : true,
+  "permalink": false
 }

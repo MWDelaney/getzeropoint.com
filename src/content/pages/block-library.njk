@@ -1,0 +1,35 @@
+---
+title: Block Library
+description: A library of reusable HTML components (blocks) for ZeroPoint and eleventy-plugin-reusable-components.
+permalink: /block-library/
+---
+
+<h1>ZeroPoint Block Library</h1>
+<p>A library of reusable HTML components (blocks) for <a href="/">ZeroPoint</a> and <a href="https://github.com/MWDelaney/eleventy-plugin-reusable-components">eleventy-plugin-reusable-components</a>.</p>
+
+<hr>
+
+{# {{ collections.components | length }} components found. #}
+
+{% for item in collections.components | sort(attribute="data.title") %}
+  {% if item.data.title %}
+  <section class="block-library-component">
+    <header>
+      <h2 id="{{ item.data.title | slugify }}">
+        {{ item.data.title | safe }}
+      </h2>
+      {{- item.data.description | safe -}}
+    </header>
+      <nav class="buttons">
+        <a href="/block-library/{{ item.data.title | slugify }}/" class="button button-primary">View component</a>
+        <a href="#top" class="button button-secondary">Back to top</a>
+      </nav>
+
+      {%- set content = item.rawInput | renderContent("njk", item.data) -%}
+      {%- include "partials/component-preview.njk" -%}
+
+
+  </section>
+  {% endif %}
+  <hr>
+{% endfor %}

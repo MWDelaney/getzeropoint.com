@@ -1,0 +1,22 @@
+---
+layout: "base"
+---
+<section class="block-library-component">
+  <header style="text-align: center;">
+    <h2 id="{{ title | slugify }}">
+      ZeroPoint Block Library - {{ title | safe }}
+    </h2>
+    {{- description | safe -}}
+  </header>
+  <hr>
+
+  {%- for item in collections.components | sort(attribute="data.title") -%}
+    {%- if item.data.title == title -%}
+    {%- include "partials/component-preview.njk" -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  <hr>
+  <nav class="buttons" style="justify-content: center;">
+    <a href="/block-library/" class="button button-primary">Back to Block Library</a>
+</section>

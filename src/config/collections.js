@@ -9,7 +9,7 @@ export default {
    */
   pages(eleventyConfig) {
     eleventyConfig.addCollection('pages', (collectionApi) => {
-      return collectionApi.getFilteredByGlob(['content/pages/**/*.md', 'content/*/pages/**/*.md']);
+      return collectionApi.getFilteredByGlob(['content/pages/**/*.njk', 'content/pages/**/*.md']);
     });
   },
 
