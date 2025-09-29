@@ -31,22 +31,29 @@
   "type": "{{ item.data.title | slugify }}",
 {%- for field in item.data.cms %}
   "{{ field.name }}":
-    {%- if field.widget == "list" and field.fields %}
-      [
-        {
-          {%- for subfield in field.fields %}
-            "{{ subfield.name }}": "{{ subfield.default or '...' }}"{% if not loop.last %},{% endif %}
-          {%- endfor %}
-        }
-      ]
-    {%- else %}
-      {%- if field.widget == "select" and field.options %}
-        "{{ field.default or (field.options[0].value if field.options[0]) or '...' }}"
-      {%- else %}
-        "{{ field.default or '...' }}"
-      {%- endif %}
-    {%- endif %}
+        {%- if field.widget == "list" and field.fields %}
+          [
+            {
+              {%- for subfield in field.fields %}
+                  "{{ subfield.name }}": "{{ subfield.default }}"{% if not loop.last %},{% endif %}
+              {%- endfor %}
+            }
+          ]
+        {%- elseif field.widget == "markdown" -%}
+          >-
+        {%- endif %}
   {%- if not loop.last %},{% endif %}
+        {%- if field.widget == "list" and field.fields %}
+          [
+            {
+              {%- for subfield in field.fields %}
+                "{{ subfield.name }}": "{{ item.data[field.name][0][subfield.name] }}"{% if not loop.last %},{% endif %}
+              {%- endfor %}
+            }
+          ]
+        {%- else %}
+      {{ item.data[field.name] }}
+        {%- endif %}
 {%- endfor %}
 {{- '\n }' | safe }} | renderComponent | safe
 {% raw %} -}} {% endraw %}
