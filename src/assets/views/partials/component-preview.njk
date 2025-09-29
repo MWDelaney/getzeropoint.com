@@ -35,13 +35,13 @@
           {%- for entry in item.data[field.name] %}
             {
               {%- for subfield in field.fields %}
-                "{{ subfield.name }}": "{{ entry[subfield.name] }}"{%- if not loop.last %},{% endif %}
+             "{{ subfield.name }}": "{{ entry[subfield.name] | safe }}"{%- if not loop.last %},{% endif %}
               {%- endfor %}
             }{%- if not loop.last %},{% endif %}
           {%- endfor %}
         ],
       {%- else %}
-        "{{ field.name }}": "{{ item.data[field.name] }}",
+  "{{ field.name }}": "{{ item.data[field.name] | safe }}",
       {%- endif %}
     {%- endfor %}
   } | renderComponent | safe
