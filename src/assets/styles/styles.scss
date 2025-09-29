@@ -180,15 +180,21 @@ ol {
   margin-top: 0;
 }
 
-summary {
-  color: var(--color-primary);
-  font-size: calc(var(--unit));
-  white-space: normal;
+details {
+  summary {
+    color: var(--color-primary);
+    font-size: calc(var(--unit));
+    white-space: normal;
 
-  &::after {
-    content: " (click to expand)";
-    font-size: calc(--var(--unit) * 0.5);
-    padding-left: calc(--var(--unit) * 0.5);
+    &::after {
+      content: " (click to expand)";
+      font-size: calc(--var(--unit) * 0.5);
+      padding-left: calc(--var(--unit) * 0.5);
+    }
+  }
+
+  &:open summary::after {
+    content: " (click to collapse)";
   }
 }
 
