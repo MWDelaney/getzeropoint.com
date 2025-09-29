@@ -9,7 +9,7 @@ permalink: /block-library/
 
 <hr>
 
-{# {{ collections.components | length }} components found. #}
+{{ collections.components | length }} components found.
 
 {% for item in collections.components | sort(attribute="data.title") %}
   {% if item.data.title %}
