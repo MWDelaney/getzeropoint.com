@@ -20,4 +20,37 @@
         </div>
       </div>
   </details>
+
+  <h3>Use {{ item.data.title }} in your content</h3>
+  <details>
+    <summary>Show / hide usage example</summary>
+    <div class="block-usage" id="{{ item.data.title | slugify }}-usage">
+{%- highlight "njk" -%}
+{% raw %} {{- {% endraw %}
+{{- '{' | safe }}
+  "type": "{{ item.data.title | slugify }}",
+{%- for field in item.data.cms %}
+  "{{ field.name }}":
+    {%- if field.widget == "list" and field.fields %}
+      [
+        {
+          {%- for subfield in field.fields %}
+            "{{ subfield.name }}": "{{ subfield.default or '...' }}"{% if not loop.last %},{% endif %}
+          {%- endfor %}
+        }
+      ]
+    {%- else %}
+      {%- if field.widget == "select" and field.options %}
+        "{{ field.default or (field.options[0].value if field.options[0]) or '...' }}"
+      {%- else %}
+        "{{ field.default or '...' }}"
+      {%- endif %}
+    {%- endif %}
+  {%- if not loop.last %},{% endif %}
+{%- endfor %}
+{{- '\n }' | safe }} | renderComponent | safe
+{% raw %} -}} {% endraw %}
+{%- endhighlight -%}
+    </div>
+  </details>
 </div>
