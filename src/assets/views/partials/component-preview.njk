@@ -21,43 +21,32 @@
       </div>
   </details>
 
-  {# <h3>Use {{ item.data.title }} in your content</h3>
+  <h3>Use {{ item.data.title }} in your content</h3>
   <details>
     <summary>Show / hide usage example</summary>
     <div class="block-usage" id="{{ item.data.title | slugify }}-usage">
 {%- highlight "njk" -%}
-{% raw %} {{- {% endraw %}
-{{- '{' | safe }}
-  "type": "{{ item.data.title | slugify }}",
-{%- for field in item.data.cms %}
-  "{{ field.name }}":
-        {%- if field.widget == "list" and field.fields %}
-          [
+{% raw %}{{- {% endraw %}
+  {
+    "type": "{{ item.data.title | slugify }}",
+    {%- for field in item.data.cms %}
+      {%- if field.widget == "list" and field.fields %}
+        "{{ field.name }}": [
+          {%- for entry in item.data[field.name] %}
             {
               {%- for subfield in field.fields %}
-                  "{{ subfield.name }}": "{{ subfield.default }}"{% if not loop.last %},{% endif %}
+                "{{ subfield.name }}": "{{ entry[subfield.name] }}"{%- if not loop.last %},{% endif %}
               {%- endfor %}
-            }
-          ]
-        {%- elseif field.widget == "markdown" -%}
-          >-
-        {%- endif %}
-  {%- if not loop.last %},{% endif %}
-        {%- if field.widget == "list" and field.fields %}
-          [
-            {
-              {%- for subfield in field.fields %}
-                "{{ subfield.name }}": "{{ item.data[field.name][0][subfield.name] }}"{% if not loop.last %},{% endif %}
-              {%- endfor %}
-            }
-          ]
-        {%- else %}
-      {{ item.data[field.name] }}
-        {%- endif %}
-{%- endfor %}
-{{- '\n }' | safe }} | renderComponent | safe
-{% raw %} -}} {% endraw %}
+            }{%- if not loop.last %},{% endif %}
+          {%- endfor %}
+        ],
+      {%- else %}
+        "{{ field.name }}": "{{ item.data[field.name] }}",
+      {%- endif %}
+    {%- endfor %}
+  } | renderComponent | safe
+{% raw %}-}}{% endraw %}
 {%- endhighlight -%}
     </div>
-  </details> #}
+  </details>
 </div>
