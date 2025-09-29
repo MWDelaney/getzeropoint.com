@@ -13,12 +13,12 @@ export default {
     eleventyConfig.addPassthroughCopy(config);
   },
 
-  // /**
-  //  * Copy images to the `public` directory
-  //  */
-  // async images(eleventyConfig) {
-  //   const config = { 'src/assets/images': 'assets/images' };
+  /**
+   * Copy images to the `public` directory
+   */
+  async images(eleventyConfig) {
+    const config = { 'src/assets/images': 'assets/images' };
 
-  //   eleventyConfig.addPassthroughCopy(config);
-  // }
+    eleventyConfig.addPassthroughCopy(config);
+  }
 };
