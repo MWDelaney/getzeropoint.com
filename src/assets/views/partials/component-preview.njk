@@ -1,7 +1,10 @@
   <div class="block-library-block-content">
     <h3>Block Preview</h3>
     <div class="block-preview" id="{{ title | slugify }}-rendered">
-      {{ content | safe }}
+      <details>
+        <summary>Show / hide block preview</summary>
+        {{ content | safe }}
+      </details>
     </div>
     <h3>Block Source Code</h3>
     <div class="block-source" id="{{ item.data.title | slugify }}-source">
