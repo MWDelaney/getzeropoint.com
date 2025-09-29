@@ -193,7 +193,7 @@ details {
     }
   }
 
-  &:open summary::after {
+  &[open] summary::after {
     content: " (click to collapse)";
   }
 }
