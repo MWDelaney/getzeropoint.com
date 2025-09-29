@@ -36,7 +36,8 @@ export default {
   async reusableComponents (eleventyConfig) {
     // Add plugin to eleventyConfig
     eleventyConfig.addPlugin(reusableComponents, {
-      componentsDir: "src/assets/components/*.njk"
+      componentsDir: "src/assets/components/*.njk",
+      excludeFromProduction: false
     });
 
 
