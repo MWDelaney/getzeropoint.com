@@ -28,7 +28,7 @@
 {%- highlight "njk" -%}
 {% raw %}{{- {% endraw %}
   {
-    "type": "{{ item.data.title | slugify }}",
+  "type": "{{ item.data.title | slugify }}",
     {%- for field in item.data.cms %}
       {%- if field.widget == "list" and field.fields %}
         "{{ field.name }}": [
