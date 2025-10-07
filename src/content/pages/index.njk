@@ -121,6 +121,125 @@ async reusableComponents (eleventyConfig) {
   </li>
 </ol>
 
+<h2 id="Next Steps">Next Steps</h2>
+<ol class="steps">
+  <li>
+    <h3 id="enable-the-blog">Enable the blog</h3>
+    <p>The blog is included in the starter, but not enabled by default.</p>
+    <p>To enable it:</p>
+    <ol>
+      <li>
+        <p>Uncomment the blog collection in <code>src/config/collections.js</code></p>
+        <details>
+          <summary><code>src/config/collections.js</code></summary>
+{% highlight "js" %}
+/**
+  * All Posts (includes all languages)
+  */
+posts(eleventyConfig) {
+  eleventyConfig.addCollection('posts', (collectionApi) => {
+    return collectionApi.getFilteredByGlob(['src/content/posts/**/*.md', 'src/content/*/posts/**/*.md']);
+  });
+}
+{% endhighlight %}
+        </details>
+      </li>
+      <li>
+        <p>Uncomment the blog index page's content in <code>src/content/blog.njk</code></p>
+        <details>
+          <summary><code>src/content/blog.njk</code></summary>
+{% highlight "markdown" %}
+{% raw %}
+---
+layout: base.njk
+permalink: /blog/{% if pagination.pageNumber > 0 %}/page/{{ pagination.pageNumber + 1 }}{% endif %}/index.html
+pagination:
+  data: collections.posts
+  size: 10
+  alias: posts
+  reverse: true
+eleventyComputed:
+  title: Blog {% if pagination.pageNumber > 0 %}(Page {{ pagination.pageNumber + 1 }}) {% endif %}
+---
+<section class="blog">
+  {%- for post in posts -%}
+    <article class="blog-post">
+      <header>
+        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+        <datetime datetime="{{ post.date }}">{{ post.date }}</datetime>
+        {%- if post.data.tags -%}
+          <ul class="tags">
+            {%- for tag in post.data.tags -%}
+              <li class="tag">{{ tag }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </header>
+      {{- post.templateContent | safe -}}
+    </article>
+  {%- endfor -%}
+
+  <nav class="pagination">
+  {%- if pagination.href.previous -%}
+    <a href="{{ pagination.href.previous }}">Previous</a>
+  {%- else -%}
+    <span class="previous">Previous</span>
+  {%- endif -%}
+
+  {%- if pagination.href.next -%}
+    <a href="{{ pagination.href.next }}">Next</a>
+  {%- else -%}
+    <span class="next">Next</span>
+  {%- endif -%}
+  </nav>
+
+</section>
+{% endraw %}
+{% endhighlight %}
+        </details>
+      </li>
+      <li>
+        <p>Create a new blog post in <code>src/content/posts/</code></p>
+        <details>
+          <summary><code>src/content/posts/</code></summary>
+          <p>Each post should be a [Markdown](https://www.markdownguide.org/) file with frontmatter metadata.</p>
+          <p>For example:</p>
+{% highlight "yaml" %}
+---
+title: My First Blog Post
+date: 2023-01-01
+---
+# My First Blog Post
+Welcome to my blog!
+{% endhighlight %}
+        </details>
+      </li>
+      <li>
+        <p>Add a link to the blog in your navigation by editing <code>src/data/navigation.json</code></p>
+        <details>
+          <summary><code>src/data/navigation.json</code></summary>
+{% highlight "json" %}
+{
+  "items": [
+    {
+      "text": "Home",
+      "url": "/",
+      "external": false
+    },
+    {
+      "text": "Blog",
+      "url": "/blog/",
+      "external": false
+    }
+  ]
+}
+{% endhighlight %}
+        </details>
+      </li>
+    </ol>
+  </li>
+</ol>
+
 <hr>
 
 <ul class="buttons" id="adding-a-cms">
