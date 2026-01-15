@@ -34,10 +34,10 @@ permalink: /adding-a-cms/
 
     <ol>
       <li>
-        <h4><code>src/content/admin/admin.yml</code></h4>
+        <h4><code>src/content/admin/admin.njk</code></h4>
         <p>This file is responsible for rendering the CMS interface.</p>
         <details>
-          <summary><code>src/content/admin/admin.yml</code></summary>
+          <summary><code>src/content/admin/admin.njk</code></summary>
 {% highlight "html" %}
 ---
 permalink: '/admin/index.html'
@@ -74,6 +74,7 @@ eleventyExcludeFromCollections: true
 ---
 eleventyExcludeFromCollections: true
 permalink: "/admin/config.yml.njk"
+layout: false
 ---
 
 # Branding and configuration
