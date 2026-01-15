@@ -10,7 +10,7 @@ permalink: /block-library/
 <p>If you'd like to contribute a block to the library, make a pull request on <a href="https://github.com/MWDelaney/getzeropoint.com">the this website's repository</a>!</p>
 <hr>
 
-{{ collections.components | length }} components found.
+{# {{ collections.components | length }} components found. #}
 
 {% for item in collections.components | sort(attribute="data.title") %}
   {% if item.data.title %}
