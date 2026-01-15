@@ -302,8 +302,176 @@ componentData.forEach(data => {
   </ol>
   </li>
   <li>
-    <h3 id="bundle-styles">Bundle Styles with Components</h3>
-    <p><strong>Coming soon!</strong></p>
+    <h3 id="bundle-styles">Bundle Styles and Scripts with Components</h3>
+    <p>The Reusable Components plugin includes built-in support for component-scoped CSS and JavaScript bundles. This allows you to keep your component styles and scripts organized alongside your component templates.</p>
+
+    <h4 id="how-bundles-work">How Bundles Work</h4>
+    <p>When you add <code>componentCss</code> or <code>componentJs</code> blocks to your components, the plugin automatically collects and bundles them. The bundles are then output in your base layout template using Eleventy's <code>getBundle</code> shortcode.</p>
+
+    <h4 id="include-bundles-in-layout">Include Bundles in Your Layout</h4>
+    <p>Make sure your base layout includes the bundle output tags. In <code>src/assets/views/layouts/base.njk</code>, add:</p>
+
+    <details>
+      <summary><code>src/assets/views/layouts/base.njk</code></summary>
+{% highlight "html" %}
+<!DOCTYPE html>
+<html lang="{% raw %}{{ lang or 'en' }}{% endraw %}">
+  <head>
+    <!-- Your stylesheets -->
+    <link rel="stylesheet" href="{% raw %}{{ '/assets/styles/styles.css' | url }}{% endraw %}"/>
+
+    <!-- Component CSS bundle -->
+    {% raw %}<style>{% getBundle "componentCss" %}</style>{% endraw %}
+
+    <!-- Other head elements -->
+  </head>
+  <body>
+    <!-- Your content -->
+    {% raw %}{{ content | safe }}{% endraw %}
+
+    <!-- Your scripts -->
+    <script src="{% raw %}{{ '/assets/scripts/main.js' | url }}{% endraw %}"></script>
+
+    <!-- Component JS bundle -->
+    {% raw %}<script>{% getBundle "componentJs" %}</script>{% endraw %}
+  </body>
+</html>
+{% endhighlight %}
+    </details>
+
+    <h4 id="component-css-example">Component CSS Example</h4>
+    <p>Add styles to your component using the <code>componentCss</code> block:</p>
+
+    <details>
+      <summary><code>src/assets/components/my-component.njk</code></summary>
+{% highlight "njk" %}
+---
+title: My Component
+textContent: "Sample content"
+---
+
+{% raw %}{%- componentCss -%}
+.block-{{ title | slugify }} {
+  background-color: var(--color-light);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-radius);
+  padding: var(--unit);
+  margin-bottom: var(--unit);
+
+  h2 {
+    color: var(--color-primary);
+    margin-top: 0;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 768px) {
+  .block-{{ title | slugify }} {
+    padding: calc(var(--unit) * 2);
+  }
+}
+{%- endcomponentCss -%}{% endraw %}
+
+<section class="block block-{% raw %}{{ title | slugify }}{% endraw %}">
+  <h2>{% raw %}{{ heading }}{% endraw %}</h2>
+  {% raw %}{{- textContent | safe -}}{% endraw %}
+</section>
+{% endhighlight %}
+    </details>
+
+    <h4 id="component-js-example">Component JavaScript Example</h4>
+    <p>Add JavaScript to your component using the <code>componentJs</code> block:</p>
+
+    <details>
+      <summary><code>src/assets/components/accordion.njk</code></summary>
+{% highlight "njk" %}
+---
+title: Accordion
+heading: Frequently Asked Questions
+items:
+  - question: "What is ZeroPoint?"
+    answer: "ZeroPoint is a starter template for Eleventy."
+  - question: "How do I use components?"
+    answer: "Follow this guide to create reusable components."
+---
+
+{% raw %}{%- componentJs -%}
+document.addEventListener('DOMContentLoaded', function() {
+  const accordions = document.querySelectorAll('.block-accordion');
+
+  accordions.forEach(accordion => {
+    const buttons = accordion.querySelectorAll('.accordion-button');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', function() {
+        const content = this.nextElementSibling;
+        const isOpen = content.style.maxHeight;
+
+        // Close all items
+        accordion.querySelectorAll('.accordion-content').forEach(item => {
+          item.style.maxHeight = null;
+          item.previousElementSibling.setAttribute('aria-expanded', 'false');
+        });
+
+        // Open clicked item if it was closed
+        if (!isOpen) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          this.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  });
+});
+{%- endcomponentJs -%}{% endraw %}
+
+{% raw %}{%- componentCss -%}
+.block-accordion {
+  .accordion-item {
+    border: 1px solid var(--color-light);
+    margin-bottom: var(--unit-small);
+  }
+
+  .accordion-button {
+    width: 100%;
+    padding: var(--unit);
+    background: var(--color-light);
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      background: var(--color-primary-light);
+    }
+  }
+
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 var(--unit);
+  }
+}
+{%- endcomponentCss -%}{% endraw %}
+
+<section class="block block-{% raw %}{{ title | slugify }}{% endraw %}">
+  <h2>{% raw %}{{ heading }}{% endraw %}</h2>
+  {% raw %}{% for item in items %}{% endraw %}
+    <div class="accordion-item">
+      <button class="accordion-button" aria-expanded="false">
+        {% raw %}{{ item.question }}{% endraw %}
+      </button>
+      <div class="accordion-content">
+        <p>{% raw %}{{ item.answer }}{% endraw %}</p>
+      </div>
+    </div>
+  {% raw %}{% endfor %}{% endraw %}
+</section>
+{% endhighlight %}
+    </details>
   </li>
 </ol>
 
