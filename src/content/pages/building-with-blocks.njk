@@ -239,7 +239,7 @@ permalink: "/admin/editor-components.js"
 layout: false
 ---
 
-const componentData = [
+{% raw %}const componentData = [
 {% for component in collections.components %}
   {
     name: "{{ component.data.title | slugify }}",
@@ -247,7 +247,7 @@ const componentData = [
     fields: {{ component.data.cms | dump | safe }}
   },
 {% endfor %}
-];
+];{% endraw %}
 
 componentData.forEach(data => {
   window.CMS.registerEditorComponent({
