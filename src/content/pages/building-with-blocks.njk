@@ -6,7 +6,7 @@ permalink: /building-with-blocks/
 
 <h1>Building Reusable Blocks for <strong class="text-gradient">ZeroPoint Starter</strong></h1>
 <p class="lead">Blocks, components, modules, widgets, partials, or whatever you call them are a common way designers and stakeholders expect to visualize websites.</p>
-<p class="lead">ZeroPoint Starter includes <a href="https://github.com/MWDelaney/eleventy-plugin-reusable-components">eleventy-plugin-reusable-components</a> preconfigured (and commented out), which makes it easy to create and manage reusable HTML components.</p>
+<p class="lead">ZeroPoint Starter includes <a href="https://github.com/MWDelaney/zeropoint-components">zeropoint-components</a> preconfigured (and commented out), which makes it easy to create and manage reusable HTML components.</p>
 <p class="lead">This guide will show you how to install and configure the plugin and create your first reusable block. In the <a href="#advanced-usage">Advanced Usage</a> section, you'll learn how to integrate reusable blocks with a git-based CMS like <a href="https://decapcms.org/">Decap CMS</a> or <a href="https://sveltiacms.app">Sveltia CMS</a>.</p>
 
 <h2>Advantages of Reusable Blocks</h2>
@@ -24,7 +24,7 @@ permalink: /building-with-blocks/
     <p>Install the Eleventy Reusable Components plugin:</p>
 
 {% highlight "bash" %}
-  npm install --save-dev eleventy-plugin-reusable-components
+  npm install --save-dev zeropoint-components
 {% endhighlight %}
     </li>
   <li>
@@ -32,11 +32,11 @@ permalink: /building-with-blocks/
     <p>Uncomment the plugin's configuration in <code>src/config/plugins.js</code>:</p>
 
 {% highlight "js" %}
-import reusableComponents from "eleventy-plugin-reusable-components";
+import reusableComponents from "zeropoint-components";
 
 /**
   * ZeroPoint Reusable Components plugin
-  * https://github.com/MWDelaney/eleventy-plugin-reusable-components
+  * https://github.com/MWDelaney/zeropoint-components
   */
 async reusableComponents (eleventyConfig) {
   // Add plugin to eleventyConfig
@@ -198,13 +198,13 @@ cms:
 {% raw %}{{-
   {
     "type": "call-to-action",
-    "heading": "Join the 11ty Meetup!",
-    "textContent": "The official 11ty Meetup is a great way to connect with other Eleventy users, share your projects, and learn new tips and tricks.",
-    "image": "/assets/images/meetup.png",
-    "imageAlt": "11ty Meetup logo",
+    "heading": "Build static sites!",
+    "textContent": "ZeroPoint gets you started statically.",
+    "image": "/assets/images/static.svg",
+    "imageAlt": "Television static",
     "links": [
-      { "label": "Learn More", "url": "https://11tymeetup.dev", "style": "primary" },
-      { "label": "Sign Up for Updates", "url": "https://11tymeetup.dev/#newsletter", "style": "secondary" }
+      { "label": "Learn More", "url": "https://getzeropoint.com", "style": "primary" },
+      { "label": "Get Started", "url": "https://github.com/mwdelaney/zeropoint", "style": "secondary" }
     ]
   } | renderComponent | safe
 -}}{% endraw %}
@@ -219,7 +219,7 @@ cms:
 <ol class="steps">
   <li>
     <h3 id="use-components-in-a-cms">Use Components in a CMS</h3>
-    <p>Eleventy's <a href="https://www.11ty.dev/docs/data-cascade/">data cascade</a> makes it easy to integrate reusable components with a CMS like <a href="https://decapcms.org/">Decap CMS</a> or <a href="https://sveltiacms.app">Sveltia</a>.</p>
+    <p>It's easy to integrate reusable components with a CMS like <a href="https://decapcms.org/">Decap CMS</a> or <a href="https://sveltiacms.app">Sveltia</a>.</p>
 
     <ol>
       <li>
