@@ -4,7 +4,7 @@
 */
 
 import { eleventyImageTransformPlugin } from '@11ty/eleventy-img';
-import reusableComponents from "eleventy-plugin-reusable-components";
+import reusableComponents from "zeropoint-components";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginTOC from "@uncenter/eleventy-plugin-toc";
 
@@ -31,7 +31,7 @@ export default {
 
   /**
    * Get ZeroPoint Reusable Components plugin
-   * https://github.com/mwdelaney/eleventy-plugin-reusable-components
+   * https://github.com/mwdelaney/zeropoint-components
    */
   async reusableComponents (eleventyConfig) {
     // Add plugin to eleventyConfig
