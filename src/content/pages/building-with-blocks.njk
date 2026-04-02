@@ -306,7 +306,7 @@ componentData.forEach(data => {
     <p>The Reusable Components plugin includes built-in support for component-scoped CSS and JavaScript bundles. This allows you to keep your component styles and scripts organized alongside your component templates.</p>
 
     <h4 id="how-bundles-work">How Bundles Work</h4>
-    <p>When you add <code>componentCss</code> or <code>componentJs</code> blocks to your components, the plugin automatically collects and bundles them. The bundles are then output in your base layout template using Eleventy's <code>getBundle</code> shortcode.</p>
+    <p>When you add <code>componentCss</code> or <code>componentJs</code> blocks to your components, the plugin automatically collects and bundles them. The bundles are then output in your base layout template using the [getBundle](https://www.11ty.dev/docs/plugins/bundle/) shortcode.</p>
 
     <h4 id="include-bundles-in-layout">Include Bundles in Your Layout</h4>
     <p>Make sure your base layout includes the bundle output tags. In <code>src/assets/views/layouts/base.njk</code>, add:</p>
@@ -393,7 +393,7 @@ title: Accordion
 heading: Frequently Asked Questions
 items:
   - question: "What is ZeroPoint?"
-    answer: "ZeroPoint is a starter template for Eleventy."
+    answer: "ZeroPoint is a static website starter kit."
   - question: "How do I use components?"
     answer: "Follow this guide to create reusable components."
 ---

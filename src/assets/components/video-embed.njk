@@ -1,0 +1,60 @@
+---
+title: Video Embed
+description: A responsive video embed for YouTube or Vimeo with a maintained aspect ratio.
+
+# Default values
+videoUrl: https://www.youtube.com/watch?v=NpEaa2P7qZI
+caption: "A placeholder video."
+
+# CMS Fields
+cms:
+  - name: videoUrl
+    label: Video URL (YouTube or Vimeo)
+    widget: string
+  - name: caption
+    label: Caption (optional)
+    widget: string
+    required: false
+  - name: background
+    label: Background Color
+    widget: select
+    options:
+      - { label: "Light", value: "light" }
+      - { label: "Dark", value: "dark" }
+      - { label: "Primary", value: "primary" }
+      - { label: "Secondary", value: "secondary" }
+---
+{#
+  Convert a YouTube or Vimeo watch URL to its embed URL.
+  YouTube: https://www.youtube.com/watch?v=ID  →  https://www.youtube.com/embed/ID
+  Vimeo:   https://vimeo.com/ID                 →  https://player.vimeo.com/video/ID
+#}
+{%- set embedUrl = videoUrl -%}
+{%- if "youtube.com/watch" in videoUrl -%}
+  {%- set videoId = videoUrl | replace("https://www.youtube.com/watch?v=", "") | replace("https://youtube.com/watch?v=", "") -%}
+  {%- set embedUrl = "https://www.youtube.com/embed/" + videoId -%}
+{%- elif "youtu.be/" in videoUrl -%}
+  {%- set videoId = videoUrl | replace("https://youtu.be/", "") -%}
+  {%- set embedUrl = "https://www.youtube.com/embed/" + videoId -%}
+{%- elif "vimeo.com/" in videoUrl and "player.vimeo.com" not in videoUrl -%}
+  {%- set videoId = videoUrl | replace("https://vimeo.com/", "") -%}
+  {%- set embedUrl = "https://player.vimeo.com/video/" + videoId -%}
+{%- endif -%}
+
+<section class="block block-{{ title | slugify }}">
+  <div class="container">
+    <figure>
+      <div class="video-wrapper">
+        <iframe
+          src="{{ embedUrl }}"
+          title="Video embed"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      {%- if caption -%}
+        <figcaption>{{ caption }}</figcaption>
+      {%- endif -%}
+    </figure>
+  </div>
+</section>

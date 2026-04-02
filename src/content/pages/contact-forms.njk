@@ -1,0 +1,68 @@
+---
+title: Contact Forms
+description: Adding a contact form to a ZeroPoint static site using Netlify Forms or Formspree — no backend required
+permalink: /contact-forms/
+---
+
+<h1 id="contact-forms">Contact Forms for <strong class="text-gradient">ZeroPoint</strong></h1>
+<p class="lead">Contact forms are a common requirement for website stakeholders, so static sites often need a way to support form submissions.</p>
+<p class="lead">Static sites don't have a server to process forms — but several services accept form posts directly, store your submissions, and notify you by email. Your HTML form stays the same; the service handles everything else.</p>
+<p class="lead">Both options below require no JavaScript, no backend, and no javascript packages. A plain HTML <code>&lt;form&gt;</code> tag is all you need.</p>
+
+<hr>
+
+<h2 id="netlify-forms">Option 1: [Netlify Forms](https://www.netlify.com/products/forms/)</h2>
+<p>If your ZeroPoint site is deployed on [Netlify](https://www.netlify.com/), form handling is built in. Netlify detects your forms at deploy time and automatically provisions an endpoint for them.</p>
+
+<ol class="steps">
+  <li>
+    <h3 id="netlify-add-attribute">Add the <code>netlify</code> attribute to your form</h3>
+{% highlight "html" %}
+<form name="contact" method="POST" data-netlify="true">
+  ...
+</form>
+{% endhighlight %}
+    <p>That's it. Deploy to Netlify and your form is live. Submissions appear in the <strong>Forms</strong> tab of your Netlify site dashboard, and Netlify sends you an email notification for each one.</p>
+  </li>
+  <li>
+    <h3 id="netlify-success-page">Customize the success page</h3>
+    <p>By default, Netlify redirects to a generic confirmation page after submission. Point to your own instead using the <code>action</code> attribute:</p>
+{% highlight "html" %}
+<form name="contact" method="POST" data-netlify="true" action="/contact/thanks/">
+  ...
+</form>
+{% endhighlight %}
+  </li>
+</ol>
+
+<hr>
+
+<h2 id="formspree">Option 2: [Formspree](https://formspree.io)</h2>
+<p>Formspree works on any host. Once you create your account, you'll receive a unique form endpoint URL to use as your form's <code>action</code> attribute.</p>
+
+<ol class="steps">
+  <li>
+    <h3 id="formspree-form">Add your Formspree endpoint to your form</h3>
+{% highlight "html" %}
+<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+  ...
+</form>
+{% endhighlight %}
+    <p>Replace <code>YOUR_FORM_ID</code> with the ID from your Formspree dashboard. Submissions appear in your Formspree dashboard and are emailed to you immediately.</p>
+  </li>
+</ol>
+
+<h2 id="going-further">Going Further</h2>
+<ul>
+  <li>🔔 <strong>Webhooks</strong> — both Netlify Forms and Formspree support outgoing webhooks on submission. Use a Netlify or Cloudflare Pages Function to forward submissions to Slack, create a CRM record, or trigger any downstream process.</li>
+  <li>📬 <a href="https://docs.netlify.com/forms/notifications/">Netlify form notifications</a> — send submissions to Slack or a webhook in addition to email.</li>
+  <li>📬 <a href="https://help.formspree.io/hc/en-us/articles/360013844334">Formspree integrations</a> — connect to Zapier, Slack, Airtable, and more.</li>
+</ul>
+
+<hr>
+
+<ul class="buttons">
+  <li>
+    <a class="button button-launch" href="/">Back Home</a>
+  </li>
+</ul>

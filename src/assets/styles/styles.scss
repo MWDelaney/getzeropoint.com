@@ -40,7 +40,8 @@ details {
   }
 }
 
-p:has(+ details) {
+p:has(+ details),
+details details {
   margin-bottom: calc(var(--unit) * 0.5);
 }
 
@@ -181,7 +182,7 @@ ol {
 }
 
 details {
-  summary {
+  > summary {
     color: var(--color-primary);
     font-size: calc(var(--unit));
     white-space: normal;
@@ -193,7 +194,7 @@ details {
     }
   }
 
-  &[open] summary::after {
+  &[open] > summary::after {
     content: " (click to collapse)";
   }
 }

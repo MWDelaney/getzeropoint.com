@@ -1,0 +1,66 @@
+---
+title: FAQ
+description: A list of frequently asked questions using native HTML details/summary — no JavaScript required.
+
+# Default values
+heading: Frequently Asked Questions
+items:
+  - question: Do I need to know how to code to use ZeroPoint?
+    answer: A basic understanding of HTML is helpful, but the block system lets you build pages visually if you pair ZeroPoint with a CMS like Netlify CMS or Decap.
+  - question: Can I use a custom domain?
+    answer: Yes. Netlify, Cloudflare Pages, and Vercel all support custom domains with free SSL certificates included.
+  - question: Is ZeroPoint free to use?
+    answer: ZeroPoint is open source and free to use. Hosting on Netlify or Cloudflare Pages is also free for most personal and small business sites.
+  - question: How do I add a blog?
+    answer: ZeroPoint includes a blog collection out of the box. Add Markdown or Nunjucks files to the `src/content/posts/` directory and they appear automatically.
+
+# CMS Fields
+cms:
+  - name: heading
+    label: Section Heading
+    widget: string
+  - name: items
+    label: Questions
+    widget: list
+    listItemLabel: Question
+    fields:
+      - name: question
+        label: Question
+        widget: string
+      - name: answer
+        label: Answer
+        widget: text
+---
+{%- componentCss -%}
+.block-faq {
+  ul {
+    list-style: none;
+  }
+
+  details summary::after {
+    content: " (click to expand)";
+  }
+
+  details[open] summary::after {
+    content: " (click to collapse)";
+  }
+}
+{%- endcomponentCss -%}
+
+<section class="block block-{{ title | slugify }}">
+  <div class="container">
+    {%- if heading -%}
+      <h2>{{ heading }}</h2>
+    {%- endif -%}
+    <ul class="faq-list">
+      {%- for item in items -%}
+        <li>
+          <details>
+            <summary>{{ item.question }}</summary>
+            <p class="faq-answer">{{ item.answer }}</p>
+          </details>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
