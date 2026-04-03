@@ -22,13 +22,9 @@ permalink: /block-library/
       {{- item.data.description | safe -}}
     </header>
       <nav class="buttons">
-        <a href="/block-library/{{ item.data.title | slugify }}/" class="button button-primary">View component</a>
+        <a href="/block-library/{{ item.data.title | slugify }}/" class="button button-primary">Get component</a>
         <a href="#top" class="button button-secondary">Back to top</a>
       </nav>
-
-      {%- set content = item.rawInput | renderContent("njk", item.data) -%}
-      {%- include "partials/component-preview.njk" -%}
-
   </section>
   {% endif %}
   <hr>
