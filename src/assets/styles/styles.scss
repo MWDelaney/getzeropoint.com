@@ -239,6 +239,33 @@ details {
   }
 }
 
+ul.features {
+  list-style: none;
+
+  > li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+
+    svg {
+      margin-right: 0.5rem;
+    }
+
+    &::before {
+      @extend .text-gradient;
+
+      content: "•";
+      font-size: 2rem;
+      font-weight: bold;
+      position: absolute;
+      left: -1rem;
+      top: 0;
+      line-height: 1;
+    }
+  }
+}
+
 .button {
   padding: var(--unit);
   text-decoration: none;
