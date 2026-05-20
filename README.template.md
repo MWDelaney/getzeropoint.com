@@ -147,7 +147,7 @@ Get ZeroPoint includes additional features that are disabled by default. Enable 
 
 ### 🧩 Component System
 
-* Reusable components via [eleventy-plugin-reusable-components](https://github.com/mwdelaney/eleventy-plugin-reusable-components)
+* Reusable components via [zeropoint-components](https://github.com/mwdelaney/zeropoint-components)
 * Enable by uncommenting the plugin in `src/config/plugins.js`
 
 *See the [CHANGELOG](CHANGELOG.md) for complete details on these features.*

@@ -260,8 +260,9 @@ ul.features {
       font-weight: bold;
       position: absolute;
       left: -1rem;
-      top: 0;
+      top: 50%;
       line-height: 1;
+      transform: translateY(-50%);
     }
   }
 }

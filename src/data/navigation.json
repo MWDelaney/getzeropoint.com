@@ -24,6 +24,11 @@
       "text": "Contact Forms",
       "url": "/contact-forms/",
       "external": false
+    },
+    {
+      "text": "Ecommerce",
+      "url": "/ecommerce/",
+      "external": false
     }
   ]
 }

@@ -1,0 +1,181 @@
+---
+title: Selling Products with Stripe from your Static Website
+description: Using Stripe's Products and Payment Links API as a build-time CMS to generate a static store with ZeroPoint.
+permalink: /adding-stripe/
+---
+
+<h1 id="adding-stripe">Selling Products with <strong class="text-gradient">Stripe</strong></h1>
+
+<p class="lead">Stripe exposes your entire product catalog through an API, making it easy to fetch your products at build time, generate your store pages statically, and let Stripe host the checkout. <strong>All static; no backend required.</strong></p>
+<p class="lead">Manage your products, prices, and payment links entirely in the Stripe Dashboard. Every time your site builds, ZeroPoint fetches the latest product data and regenerates your store pages.</p>
+
+<h2>How it works</h2>
+<ol>
+  <li>Create products and Payment Links in the Stripe Dashboard</li>
+  <li>At build time, ZeroPoint fetches your product catalog from the Stripe API</li>
+  <li>Your store pages are generated as static HTML — no runtime server needed</li>
+  <li>Customers click a link and are taken to Stripe's hosted checkout page to complete their purchase</li>
+</ol>
+
+<h2 id="steps">Steps</h2>
+<ol class="steps">
+  <li>
+    <h3 id="create-stripe-products">Create your products in Stripe</h3>
+    <p>In the <a href="https://dashboard.stripe.com/products">Stripe Dashboard</a>, create a product for each item you want to sell. Give each product a name, description, and image.</p>
+    <p>For each product, create a <strong>Payment Link</strong> (Products → your product → Create payment link). This gives you a Stripe-hosted checkout URL. <strong>Payment Links support one-time payments, subscriptions, and donations.</strong></p>
+  </li>
+  <li>
+    <h3 id="add-your-secret-key">Store your Stripe secret key</h3>
+    <p>Your secret key is used only at build time to fetch your product catalog. It never appears in the generated HTML. Add it as an environment variable in your deployment platform:</p>
+    <ul>
+      <li><strong>Netlify:</strong> Site configuration → Environment variables → Add variable</li>
+      <li><strong>Cloudflare Pages:</strong> Settings → Environment variables → Add variable</li>
+      <li><strong>GitHub Actions:</strong> Repository settings → Secrets and variables → Actions → New repository secret</li>
+    </ul>
+    <p>Name the variable <code>STRIPE_SECRET_KEY</code>. For local development, add it to a <code>.env</code> file at the root of your project (ensure <code>.env</code> is in your <code>.gitignore</code>):</p>
+{% highlight "bash" %}
+STRIPE_SECRET_KEY=sk_live_XXXXXXXXXXXXXXXXXXXXXXXX
+{% endhighlight %}
+  </li>
+  <li>
+    <h3 id="install-stripe">Install the Stripe SDK in ZeroPoint</h3>
+{% highlight "bash" %}
+npm install --save-dev stripe
+{% endhighlight %}
+  </li>
+  <li>
+    <h3 id="create-data-file">Create a Stripe data file</h3>
+    <p>Create <code>src/data/stripe.js</code> to fetch your Payment Links and their associated product data from Stripe:</p>
+    <details>
+      <summary><code>src/data/stripe.js</code></summary>
+{% highlight "js" %}
+import Stripe from 'stripe';
+
+export default async function () {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+  // Fetch all active Payment Links
+  const { data: links } = await stripe.paymentLinks.list({ active: true });
+
+  // For each link, fetch its line items and expand the product details
+  const products = await Promise.all(
+    links.map(async (link) => {
+      const { data: lineItems } = await stripe.paymentLinks.listLineItems(
+        link.id,
+        { expand: ['data.price.product'] }
+      );
+
+      const item = lineItems[0];
+      const product = item?.price?.product;
+      const currency = item?.price?.currency ?? 'usd';
+      const amount = (item?.price?.unit_amount ?? 0) / 100;
+
+      return {
+        url: link.url,
+        name: product?.name,
+        slug: product?.name?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') ?? product?.id,
+        description: product?.description,
+        image: product?.images?.[0] ?? null,
+        price: new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: currency,
+        }).format(amount),
+      };
+    })
+  );
+
+  return products;
+}
+{% endhighlight %}
+    </details>
+    <p>The <code>stripe</code> data is now available to all your ZeroPoint templates.</p>
+  </li>
+  <li>
+    <h3 id="create-store-page">Create the store listing page</h3>
+    <p>Create <code>src/content/pages/store.njk</code> to render a grid of product cards, each linking to its own detail page:</p>
+    <details>
+      <summary><code>src/content/pages/store.njk</code></summary>
+{% highlight "njk" %}
+---
+title: Store
+permalink: /store/
+---
+
+<h1>Store</h1>
+
+<div class="product-grid">
+{% raw %}{% for product in stripe %}
+  <article class="product-card">
+    {% if product.image %}
+    <a href="/store/{{ product.slug }}/">
+      <img src="{{ product.image }}" alt="{{ product.name }}">
+    </a>
+    {% endif %}
+    <h2><a href="/store/{{ product.slug }}/">{{ product.name }}</a></h2>
+    <p class="product-price">{{ product.price }}</p>
+    <a href="/store/{{ product.slug }}/" class="button button-secondary">View Product</a>
+  </article>
+{% endfor %}{% endraw %}
+</div>
+{% endhighlight %}
+    </details>
+  </li>
+  <li>
+    <h3 id="create-product-pages">Generate individual product pages</h3>
+    <p><a href="https://www.11ty.dev/docs/pagination/">Pagination</a> can generate one page per item in a dataset. Create <code>src/content/pages/store-product.njk</code> — ZeroPoint will output a separate page at <code>/store/your-product-name/</code> for every product in your Stripe catalog:</p>
+    <details>
+      <summary><code>src/content/pages/store-product.njk</code></summary>
+{% highlight "njk" %}
+{% raw %}---
+pagination:
+  data: stripe
+  size: 1
+  alias: product
+permalink: /store/{{ product.slug }}/
+eleventyExcludeFromCollections: true
+---
+
+<article class="product-single">
+  {% if product.image %}
+  <div class="product-image">
+    <img src="{{ product.image }}" alt="{{ product.name }}">
+  </div>
+  {% endif %}
+
+  <div class="product-details">
+    <h1>{{ product.name }}</h1>
+
+    {% if product.description %}
+    <div class="product-description">
+      {{ product.description | markdown | safe }}
+    </div>
+    {% endif %}
+
+    <p class="product-price">{{ product.price }}</p>
+
+    <a href="{{ product.url }}">
+      Buy Now
+    </a>
+  </div>
+</article>{% endraw %}
+{% endhighlight %}
+    </details>
+    <p>Add a product in Stripe, trigger a build, and it gets a card on <code>/store/</code> and its own page at <code>/store/its-name/</code>. Deactivate its Payment Link in Stripe and both disappear on the next build.</p>
+  </li>
+</ol>
+
+<h2 id="going-further">Going Further</h2>
+<ul>
+  <li>🏷️ <a href="https://docs.stripe.com/tax">Stripe Tax</a> — automatic tax calculation and collection, configurable directly on Payment Links. No code required.</li>
+  <li>🌍 <a href="https://docs.stripe.com/payments/currencies/localize-prices/adaptive-pricing">Adaptive Pricing</a> — Stripe automatically presents prices in your customer's local currency. One toggle per Payment Link.</li>
+  <li>👤 <a href="https://docs.stripe.com/customer-portal">Customer Portal</a> — a Stripe-hosted page where subscribers can manage their own billing, swap payment methods, and cancel. You redirect them to a URL; Stripe handles everything else.</li>
+  <li>🔔 <a href="https://docs.stripe.com/webhooks">Webhooks</a> — receive events after a payment completes to trigger fulfillment, send confirmation emails, or update external systems. Handle them with a Netlify or Cloudflare Pages Function.</li>
+</ul>
+
+<hr>
+
+<ul class="buttons">
+  <li>
+    <a class="button button-launch" href="/ecommerce/">Back to E-commerce</a>
+  </li>
+</ul>

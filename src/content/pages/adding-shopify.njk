@@ -1,0 +1,218 @@
+---
+title: Selling Products with Shopify from your Static Website
+description: Using the Shopify Storefront API as a build-time CMS to generate a static store with ZeroPoint.
+permalink: /adding-shopify/
+---
+
+<h1 id="adding-shopify">Selling Products with <strong class="text-gradient">Shopify</strong></h1>
+
+<p class="lead">Shopify's Storefront API exposes your entire product catalog through GraphQL which makes it easy to fetch your products at build time, generate your store pages statically, and let Shopify host the checkout. <strong>No backend required.</strong></p>
+<p class="lead">Manage your products, inventory, and pricing entirely in Shopify. Every time your site builds, ZeroPoint fetches the latest data and regenerates your store. Customers check out on Shopify's fully hosted, PCI-compliant checkout — no payment data touches your ZeroPoint site.</p>
+
+<h2>How it works</h2>
+<ol>
+  <li>Create products in your Shopify store</li>
+  <li>At build time, ZeroPoint fetches your product catalog from the Storefront API</li>
+  <li>Your store pages are generated as static HTML — no runtime server needed</li>
+  <li>Customers click "Buy Now" and are taken directly to Shopify's hosted checkout</li>
+</ol>
+
+<h2 id="steps">Steps</h2>
+<ol class="steps">
+  <li>
+    <h3 id="create-shopify-products">Create your products in Shopify</h3>
+    <p>In your <a href="https://admin.shopify.com">Shopify Admin</a>, go to <strong>Products</strong> and create a product for each item you want to sell. Give each product a title, description, images, and price. Shopify automatically generates a URL-safe <strong>handle</strong> from the product title — this becomes the slug for your product pages.</p>
+  </li>
+  <li>
+    <h3 id="get-storefront-token">Get a Storefront API access token</h3>
+    <p>The Storefront API uses a public access token — it's designed to be used in front-end code and only exposes data your store makes publicly available.</p>
+    <ol>
+      <li>In your Shopify Admin, go to <strong>Apps → Develop apps</strong></li>
+      <li>Click <strong>Create an app</strong>, give it a name (e.g. "ZeroPoint")</li>
+      <li>Click <strong>Configure Storefront API scopes</strong> and enable <code>unauthenticated_read_product_listings</code> and <code>unauthenticated_read_product_inventory</code></li>
+      <li>Click <strong>Install app</strong>, then copy the <strong>Storefront API access token</strong></li>
+    </ol>
+    <p>Store both your token and your store domain as environment variables in your deployment platform:</p>
+    <ul>
+      <li><strong>Netlify:</strong> Site configuration → Environment variables → Add variable</li>
+      <li><strong>Cloudflare Pages:</strong> Settings → Environment variables → Add variable</li>
+      <li><strong>GitHub Actions:</strong> Repository settings → Secrets and variables → Actions → New repository secret</li>
+    </ul>
+    <p>For local development, add both to a <code>.env</code> file at the root of your project (ensure <code>.env</code> is in your <code>.gitignore</code>):</p>
+{% highlight "bash" %}
+SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
+SHOPIFY_STOREFRONT_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+{% endhighlight %}
+  </li>
+  <li>
+    <h3 id="create-data-file">Create a Shopify data file</h3>
+    <p>No npm package required — the Storefront API is a standard GraphQL endpoint over HTTPS, so native <code>fetch</code> is all you need. Create <code>src/data/shopify.js</code> to fetch your products at build time:</p>
+    <details>
+      <summary><code>src/data/shopify.js</code></summary>
+{% highlight "js" %}
+export default async function () {
+  const query = `{
+    products(first: 50, sortKey: TITLE) {
+      edges {
+        node {
+          title
+          handle
+          description
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          featuredImage {
+            url
+            altText
+          }
+          variants(first: 1) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+  }`;
+
+  const response = await fetch(
+    `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2025-01/graphql.json`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': process.env.SHOPIFY_STOREFRONT_TOKEN,
+      },
+      body: JSON.stringify({ query }),
+    }
+  );
+
+  const { data } = await response.json();
+
+  return data.products.edges.map(({ node }) => {
+    // Variant IDs from Shopify are global IDs like "gid://shopify/ProductVariant/123"
+    // We need just the numeric portion for the checkout URL
+    const variantGid = node.variants.edges[0]?.node?.id ?? '';
+    const variantId = variantGid.split('/').pop();
+
+    const amount = parseFloat(node.priceRange.minVariantPrice.amount);
+    const currency = node.priceRange.minVariantPrice.currencyCode;
+
+    return {
+      name: node.title,
+      slug: node.handle, // Shopify handles are already URL-safe slugs
+      description: node.description,
+      image: node.featuredImage?.url ?? null,
+      imageAlt: node.featuredImage?.altText ?? node.title,
+      price: new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency,
+      }).format(amount),
+      // Direct single-product checkout URL — no backend or cart needed
+      checkoutUrl: `https://${process.env.SHOPIFY_STORE_DOMAIN}/cart/${variantId}:1/checkout`,
+    };
+  });
+}
+{% endhighlight %}
+    </details>
+    <p>The <code>shopify</code> data is now available to all your ZeroPoint templates. Note that <code>SHOPIFY_STORE_DOMAIN</code> is used at build time only — it does not appear in the generated HTML (the checkout URL is baked in as a plain string).</p>
+  </li>
+  <li>
+    <h3 id="create-store-page">Create the store listing page</h3>
+    <p>Create <code>src/content/pages/store.njk</code> to render a grid of product cards, each linking to its own detail page:</p>
+    <details>
+      <summary><code>src/content/pages/store.njk</code></summary>
+{% highlight "njk" %}
+---
+title: Store
+permalink: /store/
+---
+
+<h1>Store</h1>
+
+<div class="product-grid">
+{% raw %}{% for product in shopify %}
+  <article class="product-card">
+    {% if product.image %}
+    <a href="/store/{{ product.slug }}/">
+      <img src="{{ product.image }}" alt="{{ product.imageAlt }}">
+    </a>
+    {% endif %}
+    <h2><a href="/store/{{ product.slug }}/">{{ product.name }}</a></h2>
+    <p class="product-price">{{ product.price }}</p>
+    <a href="/store/{{ product.slug }}/" class="button button-secondary">View Product</a>
+  </article>
+{% endfor %}{% endraw %}
+</div>
+{% endhighlight %}
+    </details>
+  </li>
+  <li>
+    <h3 id="create-product-pages">Generate individual product pages</h3>
+    <p><a href="https://www.11ty.dev/docs/pagination/">Pagination</a> can generate one page per item in a dataset. Create <code>src/content/pages/store-product.njk</code> — ZeroPoint will output a page at <code>/store/your-product-handle/</code> for every product in your Shopify catalog:</p>
+    <details>
+      <summary><code>src/content/pages/store-product.njk</code></summary>
+{% highlight "njk" %}
+{% raw %}---
+pagination:
+  data: shopify
+  size: 1
+  alias: product
+permalink: /store/{{ product.slug }}/
+eleventyExcludeFromCollections: true
+---
+
+<nav class="breadcrumb">
+  <a href="/store/">← Back to Store</a>
+</nav>
+
+<article class="product-single">
+  {% if product.image %}
+  <div class="product-image">
+    <img src="{{ product.image }}" alt="{{ product.imageAlt }}">
+  </div>
+  {% endif %}
+
+  <div class="product-details">
+    <h1>{{ product.name }}</h1>
+
+    {% if product.description %}
+    <div class="product-description">
+      {{ product.description | markdown | safe }}
+    </div>
+    {% endif %}
+
+    <p class="product-price">{{ product.price }}</p>
+
+    <a href="{{ product.checkoutUrl }}" class="button button-primary">
+      Buy Now &rarr;
+    </a>
+  </div>
+</article>{% endraw %}
+{% endhighlight %}
+    </details>
+    <p>Add a product in Shopify, trigger a build, and it gets a card on <code>/store/</code> and its own page at <code>/store/its-handle/</code>. Archive a product in Shopify and both disappear on the next build.</p>
+  </li>
+</ol>
+
+<h2 id="going-further">Going Further</h2>
+<ul>
+  <li>🛒 <a href="https://shopify.dev/docs/api/storefront/latest/mutations/cartCreate">Cart API</a> — use the Storefront API's cart mutations client-side to build a multi-product cart that still checks out on Shopify. Requires JavaScript but no backend.</li>
+  <li>🏷️ <a href="https://help.shopify.com/en/manual/taxes">Shopify Tax</a> — automatic tax calculation handled entirely by Shopify at checkout. No configuration on your side.</li>
+  <li>🌍 <a href="https://help.shopify.com/en/manual/markets">Shopify Markets</a> — sell internationally with local currencies, languages, and pricing. Configured in the Shopify Dashboard.</li>
+  <li>🔔 <a href="https://shopify.dev/docs/apps/build/webhooks">Webhooks</a> — receive events after a purchase to trigger fulfillment or notifications. Handle them with a Netlify or Cloudflare Pages Function.</li>
+  <li>👤 <a href="https://help.shopify.com/en/manual/customers/customer-accounts">Customer Accounts</a> — Shopify's hosted account portal for order history and saved addresses. No code required.</li>
+</ul>
+
+<hr>
+
+<ul class="buttons">
+  <li>
+    <a class="button button-launch" href="/ecommerce/">Back to E-commerce</a>
+  </li>
+</ul>

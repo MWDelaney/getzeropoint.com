@@ -1,0 +1,47 @@
+---
+title: E-commerce
+description: Adding a static e-commerce store to ZeroPoint using third-party product APIs as a build-time CMS
+permalink: /ecommerce/
+---
+
+<h1 id="ecommerce">Selling products and accepting payments (e-commerce) with <strong class="text-gradient">ZeroPoint</strong></h1>
+
+<p class="lead">Any platform with a product API can be your store's CMS. Fetch your catalog at build time, generate static product pages, and let the platform host the checkout. No database, no server, no runtime — just durable HTML.</p>
+<p class="lead">Your products live in the platform you choose. Every time your site builds, ZeroPoint fetches the latest data and regenerates your store automatically.</p>
+
+<h2 id="example-platforms">Example platforms</h2>
+<p>The principles below apply to any e-commerce platform with a product API and hosted checkout. Here are two popular options that work great with ZeroPoint:</p>
+<ul class="features">
+  <li>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 384 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M155.6 154.6c0-22.3 18.6-30.9 48.4-30.9 43.4 0 98.5 13.3 141.9 36.7l0-134.3c-47.3-18.9-94.5-26.1-141.8-26.1-115.7 0-192.8 60.4-192.8 161.4 0 157.9 216.8 132.3 216.8 200.4 0 26.4-22.9 34.9-54.7 34.9-47.2 0-108.2-19.5-156.1-45.5l0 128.5c49.3 21.3 102.3 32.3 156 32.4 118.6 0 200.3-51 200.3-153.6 0-170.2-218-139.7-218-203.9z"/></svg>
+    <span><a href="/adding-stripe/">Stripe</a></span></li>
+  <li>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 448 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M388.5 104.1c-.2-1.1-.7-2.1-1.5-2.8s-1.8-1.2-2.9-1.2c-2 0-37.2-.8-37.2-.8s-21.6-20.8-29.6-28.8l0 432.7 125.7-31.2s-54-365.5-54.4-367.9zM288.9 70.5c-1.9-6.1-4.3-11.9-7.2-17.6-10.4-20-26-30.9-44.4-30.9-1.3 0-2.7 .1-4 .4-.4-.8-1.2-1.2-1.6-2-8-8.8-18.4-12.8-30.8-12.4-24 .8-48 18-67.2 48.8-13.6 21.6-24 48.8-26.8 70.1-27.6 8.4-46.8 14.4-47.2 14.8-14 4.4-14.4 4.8-16 18-1.2 10-38 291.8-38 291.8l302.6 52.5 0-438.3c-1.5 .1-2.9 .2-4.4 .4 0 0-5.6 1.6-14.8 4.4zM233.6 87.7c-16 4.8-33.6 10.4-50.8 15.6 4.8-18.8 14.4-37.6 25.6-50 4.4-4.4 10.4-9.6 17.2-12.8 6.8 14.4 8.4 34 8 47.2zM200.8 24.4c5-.2 10 1.1 14.4 3.6-6.4 3.2-12.8 8.4-18.8 14.4-15.2 16.4-26.8 42-31.6 66.5-14.4 4.4-28.8 8.8-42 12.8 8.8-38.4 41.2-96.4 78-97.2zM154.4 244.6c1.6 25.6 69.2 31.2 73.2 91.7 2.8 47.6-25.2 80.1-65.6 82.5-48.8 3.2-75.6-25.6-75.6-25.6l10.4-44s26.8 20.4 48.4 18.8c14-.8 19.2-12.4 18.8-20.4-2-33.6-57.2-31.6-60.8-86.9-3.2-46.4 27.2-93.3 94.5-97.7 26-1.6 39.2 4.8 39.2 4.8l-15.2 57.6s-17.2-8-37.6-6.4c-29.6 2-30 20.8-29.6 25.6zM249.6 82.9c0-12-1.6-29.2-7.2-43.6 18.4 3.6 27.2 24 31.2 36.4-7.2 2-15.2 4.4-24 7.2z"/></svg>
+    <span><a href="/adding-shopify/">Shopify</a></span></li>
+</ul>
+
+<h2>Both follow the same pattern</h2>
+<ol>
+  <li>Create products in the platform's dashboard</li>
+  <li><code>src/data/[platform].js</code> fetches your catalog at build time</li>
+  <li>A store listing page at <code>/store/</code> loops over the data</li>
+  <li>Individual product pages at <code>/store/product-name/</code> are generated via <a href="https://www.11ty.dev/docs/pagination/">pagination</a></li>
+  <li>The "Buy Now" button links to the platform's hosted checkout — no payment data touches your site</li>
+</ol>
+
+<ul class="buttons" style="justify-content: center; margin-top: 2rem;">
+  <li>
+    <a class="button button-launch" href="/adding-stripe/">Adding products with Stripe</a>
+  </li>
+  <li>
+    <a class="button button-launch" href="/adding-shopify/">Adding products with Shopify</a>
+  </li>
+</ul>
+
+<hr>
+
+<ul class="buttons">
+  <li>
+    <a class="button button-launch" href="/">Back Home</a>
+  </li>
+</ul>
