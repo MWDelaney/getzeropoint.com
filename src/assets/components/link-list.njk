@@ -1,0 +1,82 @@
+---
+# Required fields
+title: Link List
+description: A stacked collection of link buttons for a personal landing page or link hub.
+
+# Default values
+heading: Your Link List
+introduction: A clean component for your key links
+links:
+  - link: "#"
+    linkText: Link One
+    description: >-
+      A description of Link One that can include <strong>HTML</strong> formatting.
+  - link: "#"
+    linkText: Link Two
+    description: >-
+      A description of Link Two that can include <strong>HTML</strong> formatting.
+  - link: "#"
+    linkText: Link Three
+    description: >-
+      A description of Link Three that can include <strong>HTML</strong> formatting.
+
+# CMS Fields
+cms:
+  - name: heading
+    label: Heading
+    widget: string
+  - name: introduction
+    label: Introduction
+    widget: markdown
+  - name: links
+    label: Links
+    widget: list
+    listItemLabel: Link
+    fields:
+      - name: linkText
+        label: Link Text
+        widget: string
+      - name: link
+        label: Link URL
+        widget: string
+      - name: description
+        label: Link Description
+        widget: markdown
+---
+
+{# Optional component CSS #}
+{% componentCss %}
+  .block-{{ title | slugify }} {
+    li {
+      margin-bottom: var(--unit);
+    }
+  }
+{% endcomponentCss %}
+
+{# Component HTML, using the default values above #}
+<section class="block block-{{ title | slugify }}">
+  <div class="container">
+    {%- if heading -%}
+      <h2>{{ heading }}</h2>
+    {%- endif -%}
+
+    {%- if introduction -%}
+      {{ introduction | safe }}
+    {%- endif -%}
+
+    {%- if links and links | length > 0 -%}
+      <ul>
+        {%- for item in links -%}
+          <li>
+            <a href="{{ item.link }}">
+              {{ item.linkText }}
+            </a>
+            {%- if item.description -%}
+              <aside>{{ item.description | safe }}</aside>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
