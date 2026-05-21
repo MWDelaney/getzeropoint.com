@@ -6,6 +6,11 @@
       "external": false
     },
     {
+      "text": "Author",
+      "url": "https://mwdelaney.me",
+      "external": true
+    },
+    {
       "text": "Starter",
       "url": "https://github.com/MWDelaney/ZeroPoint",
       "external": true
