@@ -16,6 +16,26 @@ body {
   container-name: body;
   container-type: inline-size;
 }
+svg {
+  color: var(--color-text);
+}
+svg path:not([fill="none"]),
+svg circle:not([fill="none"]),
+svg rect:not([fill="none"]),
+svg ellipse:not([fill="none"]),
+svg polygon:not([fill="none"]),
+svg polyline:not([fill="none"]) {
+  fill: currentColor;
+}
+svg path:not([stroke="none"]),
+svg circle:not([stroke="none"]),
+svg rect:not([stroke="none"]),
+svg ellipse:not([stroke="none"]),
+svg polygon:not([stroke="none"]),
+svg polyline:not([stroke="none"]),
+svg line:not([stroke="none"]) {
+  stroke: currentColor;
+}
 
 h1 {
   text-align: center;
@@ -58,6 +78,17 @@ details details {
     background-clip: text;
     color: transparent;
     fill: url(#ZeroPointGradient);
+  }
+
+  svg path,
+  svg circle,
+  svg rect,
+  svg ellipse,
+  svg polygon,
+  svg polyline,
+  svg line {
+    fill: inherit;
+    stroke: inherit;
   }
 }
 
@@ -310,7 +341,7 @@ pre {
   justify-content: start;
   align-items: center;
   flex-direction: column;
-  gap: var(--unit);
+  gap: calc(var(--unit) * 2);
   list-style-type: none;
   padding-left: 0;
   padding-top: var(--unit);
